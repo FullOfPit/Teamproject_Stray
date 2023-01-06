@@ -15,4 +15,8 @@ public class TripService {
     public List<Trip> getAll() {
         return this.tripRepo.findAll();
     }
+
+    public Trip add(Trip trip) {
+        return this.tripRepo.save(trip);
+    }
 }

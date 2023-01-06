@@ -1,5 +1,6 @@
 package com.example.backend.controller;
 
+import com.example.backend.model.Location;
 import com.example.backend.model.Trip;
 import com.example.backend.service.TripService;
 import lombok.RequiredArgsConstructor;
@@ -22,4 +23,13 @@ public class TripsController {
     public Trip add(@RequestBody Trip trip){
         return this.tripService.add(trip);
     }
+
+    @GetMapping("/{id}/shortest-path")
+    public List<Location> getShortestPath(@PathVariable String id) {
+        // @Todo wenn trip nicht existiert dann HTTPStatusCode 404
+
+        return this.tripService.getShortestPathById(id);
+    }
+
+
 }

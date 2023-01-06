@@ -7,12 +7,14 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.MediaType;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.hamcrest.Matchers.notNullValue;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -30,19 +32,19 @@ class TripsControllerTest {
     void getAll_returnEmptyWhenNoData() throws Exception {
         //when and then
         mvc.perform(get("/api/trips"))
-            .andExpect(status().isOk())
-            .andExpect(content().json("[]",true));
+                .andExpect(status().isOk())
+                .andExpect(content().json("[]", true));
     }
 
     @Test
     void getAll_returnAllTripsWhenTripsExist() throws Exception {
         //given
-        Location location1 =new Location(1,"Kölner Dom",50.941386546092225,6.958270670147375);
-        Location location2 =new Location(2,"Planten un Blomen",53.5625456617408,9.98188182570993);
+        Location location1 = new Location(1, "Kölner Dom", 50.941386546092225, 6.958270670147375);
+        Location location2 = new Location(2, "Planten un Blomen", 53.5625456617408, 9.98188182570993);
 
-        List<Trip> trips =new ArrayList<>(List.of(
-                new Trip("abc1","My Trip",  List.of(location1,location2)),
-                new Trip("abc2","My Trip 2", new ArrayList<>())
+        List<Trip> trips = new ArrayList<>(List.of(
+                new Trip("abc1", "My Trip", List.of(location1, location2)),
+                new Trip("abc2", "My Trip 2", new ArrayList<>())
         ));
 
         this.tripRepo.saveAll(trips);
@@ -72,6 +74,51 @@ class TripsControllerTest {
         //when and then
         mvc.perform(get("/api/trips"))
                 .andExpect(status().isOk())
-                .andExpect(content().json(expected,true));
+                .andExpect(content().json(expected, true));
+    }
+
+    @Test
+    public void add_returnTripWhenAddTrip() throws Exception {
+        String expected = """
+                {
+                    "title": "My Trip",
+                    "locations": [{
+                       "id": 1,
+                       "name": "Kölner Dom",
+                       "latitude": 50.941386546092225,
+                       "longitude": 6.958270670147375
+                     },{
+                        "id": 2,
+                        "name": "Planten un Blomen",
+                        "latitude": 53.5625456617408,
+                        "longitude": 9.98188182570993
+                    }]
+                }
+                """;
+
+        String given = """
+                {
+                    "title": "My Trip",
+                    "locations": [{
+                       "name": "Kölner Dom",
+                       "latitude": 50.941386546092225,
+                       "longitude": 6.958270670147375
+                     },{
+                        "name": "Planten un Blomen",
+                        "latitude": 53.5625456617408,
+                        "longitude": 9.98188182570993
+                    }]
+                }
+                """;
+
+        // when + then
+        this.mvc.perform(
+                post("/api/trips")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(given))
+                .andExpect(status().isOk())
+                .andExpect(content().json(expected))
+                .andExpect(jsonPath("$.id", notNullValue()));
+
     }
 }

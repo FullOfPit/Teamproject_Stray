@@ -1,6 +1,8 @@
 package com.example.backend.service;
 
 import com.example.backend.model.Location;
+import com.example.backend.model.MatrixServiceRequest;
+import com.example.backend.model.MatrixServiceResponse;
 import com.example.backend.model.Trip;
 import com.example.backend.repository.TripRepo;
 import lombok.RequiredArgsConstructor;
@@ -9,7 +11,6 @@ import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 
-import java.sql.Array;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -45,6 +46,7 @@ public class TripService {
 
         Trip trip = optionalTrip.get();
 
+
         // locations in format umwandeln, was die API benötigt
         List<List<Double>> locations = new ArrayList<>();
 
@@ -57,6 +59,8 @@ public class TripService {
             );
         }
 
+        MatrixServiceRequest matrixServiceRequest = new MatrixServiceRequest(locations);
+
         // API aufrufen und distancen abrufen
         /**
          * POST https://api.openrouteservice.org/v2/matrix/foot-walking
@@ -67,7 +71,7 @@ public class TripService {
          *          [37.573242,55.801281],
          *          [115.663757,38.106467]
          *      ],
-         *      "metrics": ["duration"]
+         *      "metrics": ["distance"]
          * }
          *
          *
@@ -104,16 +108,17 @@ public class TripService {
          */
         // @ToDo Model erstellen, um API Request abzubilden
         // @ToDO Model erstellen, um API Response abzubilden
-//        WebClient client = WebClient.create("https://api.openrouteservice.org/v2/matrix");
-//        client
-//                .post()
-//                .uri("/foot-walking")
-//                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-//                .bodyValue(message) // Object der ApiRequest Klasse mit Daten, die wir schicken wollen
-//                .retrieve()
-//                .toEntity(Message.class) // ApiResponse Klasse
-//                .block()
-//                .getBody();
+            WebClient client = WebClient.create("https://api.openrouteservice.org/v2/matrix");
+            MatrixServiceResponse matrixServiceResponse = client
+                .post()
+                .uri("/foot-walking")
+                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                    .header(HttpHeaders.AUTHORIZATION,"5b3ce3597851110001cf6248c1d090744eaa41c1b4755e597d609c57")
+                .bodyValue(matrixServiceRequest) // Object der ApiRequest Klasse mit Daten, die wir schicken wollen
+                .retrieve()
+                .toEntity(MatrixServiceResponse.class) // ApiResponse Klasse
+                .block()
+                .getBody();
 
 
         // shortest path berechnen -> damit muss liste von locations sortiert werden
@@ -121,5 +126,6 @@ public class TripService {
         // return sortierte liste mit locations
 
         return new ArrayList<>();
+
     }
 }

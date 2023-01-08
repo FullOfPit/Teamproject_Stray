@@ -113,7 +113,7 @@ public class TripService {
                 .post()
                 .uri("/foot-walking")
                 .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-                    .header(HttpHeaders.AUTHORIZATION,"5b3ce3597851110001cf6248c1d090744eaa41c1b4755e597d609c57")
+                .header(HttpHeaders.AUTHORIZATION, "5b3ce3597851110001cf6248c1d090744eaa41c1b4755e597d609c57")
                 .bodyValue(matrixServiceRequest) // Object der ApiRequest Klasse mit Daten, die wir schicken wollen
                 .retrieve()
                 .toEntity(MatrixServiceResponse.class) // ApiResponse Klasse

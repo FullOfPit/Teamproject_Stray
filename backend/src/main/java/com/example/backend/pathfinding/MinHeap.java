@@ -1,7 +1,10 @@
 package com.example.backend.pathfinding;
+import lombok.Data;
+
 import java.util.ArrayList;
 import java.util.List;
 
+@Data
 public class MinHeap {
 
     private List<Integer> heap = new ArrayList<>();
@@ -17,8 +20,8 @@ public class MinHeap {
         if (this.size == 0) {
             return null;
         }
-        this.swap(1, this.size);
-        Integer min = this.heap.remove(this.size);
+        this.swap(0, this.size -1);
+        Integer min = this.heap.remove(this.size - 1);
         this.size--;
         this.heapify();
 
@@ -26,10 +29,10 @@ public class MinHeap {
     }
 
     public void bubbleUp() {
-        int current = this.size;
+        int current = this.size - 1;
 
         while (current > 1 && this.heap.get(getParentIndex(current)) > this.heap.get(current)) {
-            this.swap(this.size, getParentIndex(current));
+            this.swap(current, getParentIndex(current));
             current = getParentIndex(current);
         }
     }
@@ -62,7 +65,7 @@ public class MinHeap {
     }
 
     public boolean exists(int index) {
-        return index <= this.size;
+        return index < this.size;
     }
 
     public boolean canSwap(int current, int leftChildIndex, int rightChildIndex) {
@@ -78,7 +81,7 @@ public class MinHeap {
 
 
     public Integer getParentIndex(int index) {
-        return Math.floorDiv(index, 2);
+        return index / 2;
     }
     public Integer getLeftChildIndex(int index) {
         return index * 2;

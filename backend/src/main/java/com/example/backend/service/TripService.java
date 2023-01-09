@@ -6,6 +6,7 @@ import com.example.backend.model.MatrixServiceResponse;
 import com.example.backend.model.Trip;
 import com.example.backend.repository.TripRepo;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
@@ -18,6 +19,12 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 public class TripService {
+
+    @Value("${open_route_service.api_key}")
+    private String apiKey;
+
+    @Value("${open_route_service.url}")
+    private String apiUrl;
     private final TripRepo tripRepo;
 
     public List<Trip> getAll() {
@@ -108,12 +115,12 @@ public class TripService {
          */
         // @ToDo Model erstellen, um API Request abzubilden
         // @ToDO Model erstellen, um API Response abzubilden
-            WebClient client = WebClient.create("https://api.openrouteservice.org/v2/matrix");
+            WebClient client = WebClient.create(apiUrl + "/matrix");
             MatrixServiceResponse matrixServiceResponse = client
                 .post()
                 .uri("/foot-walking")
                 .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-                .header(HttpHeaders.AUTHORIZATION, "5b3ce3597851110001cf6248c1d090744eaa41c1b4755e597d609c57")
+                .header(HttpHeaders.AUTHORIZATION, apiKey)
                 .bodyValue(matrixServiceRequest) // Object der ApiRequest Klasse mit Daten, die wir schicken wollen
                 .retrieve()
                 .toEntity(MatrixServiceResponse.class) // ApiResponse Klasse

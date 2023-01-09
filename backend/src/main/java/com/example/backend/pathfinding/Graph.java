@@ -17,8 +17,12 @@ public class Graph {
         vertices.put(vertexName,new Vertex(vertexName,0,""));
     }
 
-    public void addEdge(Edge edge){
+    public void addNonDirectedEdge(Edge edge){
         edges.add(edge);
         edges.add(new Edge(edge.getEndVertex(), edge.getStartVertex(), edge.getDistance()));
+    }
+
+    public void addDirectedEdge(Edge edge){
+        edges.add(edge);
     }
 }

@@ -18,8 +18,15 @@ public class TripsController {
         return this.tripService.getAll();
     }
 
+    @GetMapping(path = "/{Id}")
+    public Trip getById (@PathVariable String Id) throws Exception {
+        return this.tripService.getById(Id);
+
+    }
+
     @PostMapping
     public Trip add(@RequestBody Trip trip){
         return this.tripService.add(trip);
     }
+
 }

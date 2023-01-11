@@ -1,5 +1,6 @@
 package com.example.backend.service;
 
+import com.example.backend.exception.TripNotRegisteredException;
 import com.example.backend.model.Location;
 import com.example.backend.model.Trip;
 import com.example.backend.repository.TripRepo;
@@ -8,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+
 @Service
 @RequiredArgsConstructor
 public class TripService {
@@ -15,6 +17,11 @@ public class TripService {
 
     public List<Trip> getAll() {
         return this.tripRepo.findAll();
+    }
+
+    public Trip getById(String Id) throws Exception {
+        //Refactor redundancy
+        return this.tripRepo.findById(Id).orElseThrow(TripNotRegisteredException::new);
     }
 
     public Trip add(Trip trip) {

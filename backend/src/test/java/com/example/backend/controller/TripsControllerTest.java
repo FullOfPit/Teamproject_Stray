@@ -119,6 +119,12 @@ class TripsControllerTest {
                 .andExpect(content().json(expected, true));
     }
 
+    @Test
+    void getById_return404ErrorWhenIdNotRegistered() throws Exception {
+        mvc.perform(get("/api/trips/abc1"))
+                .andExpect(status().isNotFound());
+    }
+
 
 
     @Test

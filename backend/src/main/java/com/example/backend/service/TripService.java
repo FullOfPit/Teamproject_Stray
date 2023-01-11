@@ -33,4 +33,13 @@ public class TripService {
 
         return this.tripRepo.save(trip);
     }
+
+    public void deleteById(String Id) throws TripNotRegisteredException {
+        if (this.tripRepo.existsById(Id)) {
+            this.tripRepo.deleteById(Id);
+        } else {
+            throw new TripNotRegisteredException();
+        }
+
+    }
 }

@@ -88,6 +88,4 @@ class TripServiceTest {
         //Then
         Assertions.assertThrows(TripNotRegisteredException.class, () -> {tripService.getById("TestId");});
     }
-
-
 }

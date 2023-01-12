@@ -12,7 +12,6 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.*;
 
 class TripServiceTest {
@@ -82,7 +81,7 @@ class TripServiceTest {
     void getById_ReturnTripNotRegisteredException() {
         //Given
         TripRepo tripRepo = mock(TripRepo.class);
-        given(tripRepo.findById("TestId")).willAnswer(invocationOnMock -> {throw new TripNotRegisteredException();});
+        when(tripRepo.findById("TestId")).thenReturn(Optional.ofNullable(null));
         //When
         TripService tripService = new TripService(tripRepo);
         //Then

@@ -19,9 +19,9 @@ public class TripsController {
         return this.tripService.getAll();
     }
 
-    @GetMapping(path = "/{Id}")
-    public Trip getById (@PathVariable String Id) throws Exception {
-        return this.tripService.getById(Id);
+    @GetMapping(path = "/{id}")
+    public Trip getById (@PathVariable String id) throws Exception {
+        return this.tripService.getById(id);
     }
 
     @PostMapping

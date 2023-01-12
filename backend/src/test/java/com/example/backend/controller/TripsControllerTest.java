@@ -126,7 +126,6 @@ class TripsControllerTest {
     }
 
 
-
     @Test
     public void add_returnTripWhenAddTrip() throws Exception {
         String expected = """
@@ -170,5 +169,20 @@ class TripsControllerTest {
                 .andExpect(content().json(expected))
                 .andExpect(jsonPath("$.id", notNullValue()));
 
+    }
+
+    @Test
+    void deleteById_DeletesTripFromListCorrectly() throws Exception {
+        Trip testTrip = testTrip1();
+        this.tripRepo.save(testTrip);
+
+        mvc.perform(delete("/api/trips/" + testTrip.getId()))
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    void deleteById_Throws404WhenIdNotRegistered() throws Exception {
+        mvc.perform(delete("/api/trips/NONEREGISTEREDID"))
+                .andExpect(status().isNotFound());
     }
 }

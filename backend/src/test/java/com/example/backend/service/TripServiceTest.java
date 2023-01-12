@@ -87,4 +87,28 @@ class TripServiceTest {
         //Then
         Assertions.assertThrows(TripNotRegisteredException.class, () -> tripService.getById("TestId"));
     }
+
+    @Test
+    void deleteById_DeletesTripIfRegistered() throws TripNotRegisteredException {
+        //Given
+        TripRepo tripRepo = mock(TripRepo.class);
+        when(tripRepo.existsById("abc1")).thenReturn(true);
+        TripService tripService = new TripService(tripRepo);
+        //When
+        tripService.deleteById("abc1");
+        //Then
+        verify(tripRepo).deleteById("abc1");
+    }
+
+    @Test
+    void deleteById_ThrowsTripNotRegisteredException_WhenNotRegistered() {
+        //Given
+        TripRepo tripRepo = mock(TripRepo.class);
+        when(tripRepo.existsById("abc1")).thenReturn(false);
+        TripService tripService = new TripService(tripRepo);
+        //When - Then
+        Assertions.assertThrows(TripNotRegisteredException.class, () -> tripService.deleteById("abc1"));
+    }
+
+
 }

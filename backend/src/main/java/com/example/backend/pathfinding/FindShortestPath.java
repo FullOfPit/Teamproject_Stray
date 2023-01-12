@@ -6,6 +6,7 @@ import lombok.Data;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import static java.lang.Double.POSITIVE_INFINITY;
 
@@ -21,22 +22,21 @@ public class FindShortestPath {
     public List<Vertex> findShortestPath() {
         initialize();
 
-        while (!unvisited.isEmpty()) {
+        while (!this.unvisited.isEmpty()) {
             Vertex evaluatedVertex = findVertexWithMinDistanceToSource();
-            unvisited.remove(evaluatedVertex);
-            visited.add(evaluatedVertex);
+            this.unvisited.remove(evaluatedVertex);
+            this.visited.add(evaluatedVertex);
 
-            Map<Vertex, Double> neighbors = findNeighborVerticesInUnvisited(evaluatedVertex);
+            Map<Vertex, Double> neighbors = findDistancesToUnvisitedNeighbors(evaluatedVertex);
             for (Vertex vertex : neighbors.keySet()) {
                 double distance = neighbors.get(vertex);
                 double alternativeDistanceToSource = evaluatedVertex.getDistanceToSource() + distance;
                 if (alternativeDistanceToSource < vertex.getDistanceToSource()) {
                     vertex.setDistanceToSource(alternativeDistanceToSource);
-                    vertex.setPreviousVertex(vertex.getName());
                 }
             }
         }
-        return visited;
+        return this.visited;
     }
 
     public void initialize() {
@@ -47,7 +47,6 @@ public class FindShortestPath {
             } else {
                 vertex.setDistanceToSource(POSITIVE_INFINITY);
             }
-            vertex.setPreviousVertex("Null");
             this.unvisited.add(vertex);
         }
     }
@@ -62,12 +61,16 @@ public class FindShortestPath {
         return minVertex;
     }
 
-    public Map<Vertex, Double> findNeighborVerticesInUnvisited(Vertex vertex) {
+    public Map<Vertex, Double> findDistancesToUnvisitedNeighbors(Vertex vertex) {
         Map<Vertex, Double> neighbors = new HashMap<>();
+        List<String> visitedListNames = visited.stream().map(v -> v.getName()).toList();
+
         for (Edge edge : this.graph.getEdges()) {
             if (edge.getStartVertex().equals(vertex.getName())) {
                 Vertex endVertex = graph.getVertices().get(edge.getEndVertex());
-                neighbors.put(endVertex, edge.getDistance());
+                    if (!visitedListNames.contains(endVertex.getName())) {
+                        neighbors.put(endVertex, edge.getDistance());
+                    }
             }
         }
         return neighbors;

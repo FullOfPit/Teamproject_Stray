@@ -8,5 +8,4 @@ import lombok.Data;
 public class Vertex {
     private String name;
     private double distanceToSource;
-    private String previousVertex;
 }

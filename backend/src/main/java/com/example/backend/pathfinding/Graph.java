@@ -14,12 +14,7 @@ public class Graph {
     private Map<String,Vertex> vertices;
     private List<Edge> edges;
     public void addVertex(String vertexName){
-        vertices.put(vertexName,new Vertex(vertexName,0,""));
-    }
-
-    public void addNonDirectedEdge(Edge edge){
-        edges.add(edge);
-        edges.add(new Edge(edge.getEndVertex(), edge.getStartVertex(), edge.getDistance()));
+        vertices.put(vertexName,new Vertex(vertexName,0));
     }
 
     public void addDirectedEdge(Edge edge){

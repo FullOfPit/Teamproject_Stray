@@ -19,9 +19,9 @@ public class TripService {
         return this.tripRepo.findAll();
     }
 
-    public Trip getById(String Id) throws Exception {
+    public Trip getById(String id) throws Exception {
         //Refactor redundancy
-        return this.tripRepo.findById(Id).orElseThrow(TripNotRegisteredException::new);
+        return this.tripRepo.findById(id).orElseThrow(TripNotRegisteredException::new);
     }
 
     public Trip add(Trip trip) {

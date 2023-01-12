@@ -205,7 +205,10 @@ class TripsControllerTest {
                                 .content(json))
                 .andExpect(status().isOk())
                 .andExpect(content().json(json))
-                .andExpect(jsonPath("$.locations.*.id", notNullValue()));
+                .andExpect(jsonPath("$.locations.*.id", allOf(
+                        hasSize(2),
+                        everyItem(notNullValue())
+                )));
     }
 
     @Test
@@ -213,7 +216,7 @@ class TripsControllerTest {
         // given
         String givenJson = """
                 {
-                    "id": "does-not-exist"
+                    "id": "does-not-exist",
                     "title": "Does not matter",
                     "locations": []
                 }

@@ -29,10 +29,10 @@ class TripsControllerTest {
     private TripRepo tripRepo;
 
     private Location testLocation1() {
-        return new Location(1, "Kölner Dom", 50.941386546092225, 6.958270670147375);
+        return new Location("xyz1", "Kölner Dom", 50.941386546092225, 6.958270670147375);
     }
     private Location testLocation2() {
-        return new Location(2, "Planten un Blomen", 53.5625456617408, 9.98188182570993);
+        return new Location("xyz2", "Planten un Blomen", 53.5625456617408, 9.98188182570993);
     }
     private Trip testTrip1() {
         return new Trip("abc1", "My Trip", List.of(testLocation1(), testLocation2()));
@@ -66,12 +66,12 @@ class TripsControllerTest {
                     "id":"abc1",
                     "title": "My Trip",
                     "locations": [{
-                       "id": 1,
+                       "id": "xyz1",
                        "name": "Kölner Dom",
                        "latitude": 50.941386546092225,
                        "longitude": 6.958270670147375
                      },{
-                        "id": 2,
+                        "id": "xyz2",
                         "name": "Planten un Blomen",
                         "latitude": 53.5625456617408,
                         "longitude": 9.98188182570993
@@ -99,12 +99,12 @@ class TripsControllerTest {
                         "id":"abc1",
                         "title": "My Trip",
                         "locations": [{
-                           "id": 1,
+                           "id": "xyz1",
                            "name": "Kölner Dom",
                            "latitude": 50.941386546092225,
                            "longitude": 6.958270670147375
                          },{
-                            "id": 2,
+                            "id": "xyz2",
                             "name": "Planten un Blomen",
                             "latitude": 53.5625456617408,
                             "longitude": 9.98188182570993
@@ -128,23 +128,6 @@ class TripsControllerTest {
 
     @Test
     public void add_returnTripWhenAddTrip() throws Exception {
-        String expected = """
-                {
-                    "title": "My Trip",
-                    "locations": [{
-                       "id": 1,
-                       "name": "Kölner Dom",
-                       "latitude": 50.941386546092225,
-                       "longitude": 6.958270670147375
-                     },{
-                        "id": 2,
-                        "name": "Planten un Blomen",
-                        "latitude": 53.5625456617408,
-                        "longitude": 9.98188182570993
-                    }]
-                }
-                """;
-
         String given = """
                 {
                     "title": "My Trip",
@@ -166,8 +149,9 @@ class TripsControllerTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(given))
                 .andExpect(status().isOk())
-                .andExpect(content().json(expected))
-                .andExpect(jsonPath("$.id", notNullValue()));
+                .andExpect(content().json(given))
+                .andExpect(jsonPath("$.id", notNullValue()))
+                .andExpect(jsonPath("$.locations.*.id", notNullValue()));
 
     }
 

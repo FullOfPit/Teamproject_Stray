@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Data
@@ -13,6 +14,7 @@ import java.util.List;
 public class Trip {
     @Id
     private String id;
+    private LocalDateTime tripTimeStamp;
     private String title;
     private List<Location> locations;
 }

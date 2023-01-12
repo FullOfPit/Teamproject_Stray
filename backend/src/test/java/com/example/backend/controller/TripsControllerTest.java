@@ -11,6 +11,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,10 +36,10 @@ class TripsControllerTest {
         return new Location("xyz2", "Planten un Blomen", 53.5625456617408, 9.98188182570993);
     }
     private Trip testTrip1() {
-        return new Trip("abc1", "My Trip", List.of(testLocation1(), testLocation2()));
+        return new Trip("abc1",testTimeStamp(), "My Trip", List.of(testLocation1(), testLocation2()));
     }
     private Trip testTrip2() {
-        return new Trip("abc2", "My Trip 2", new ArrayList<>());
+        return new Trip("abc2",testTimeStamp(), "My Trip 2", new ArrayList<>());
     }
 
     private List<Trip> testTripList() {
@@ -46,6 +47,10 @@ class TripsControllerTest {
                 testTrip1(),
                 testTrip2()
         );
+    }
+
+    private LocalDateTime testTimeStamp() {
+        return LocalDateTime.of(2020, 1, 1, 0,0);
     }
 
     @Test
@@ -64,6 +69,7 @@ class TripsControllerTest {
         String expected = """
                 [{
                     "id":"abc1",
+                    "tripTimeStamp" : "2020-01-01T00:00:00",
                     "title": "My Trip",
                     "locations": [{
                        "id": "xyz1",
@@ -78,6 +84,7 @@ class TripsControllerTest {
                     }]
                 },{
                     "id":"abc2",
+                    "tripTimeStamp" : "2020-01-01T00:00:00",
                     "title": "My Trip 2",
                     "locations":[]
                 }]
@@ -97,6 +104,7 @@ class TripsControllerTest {
         String expected = """
                     {
                         "id":"abc1",
+                        "tripTimeStamp" : "2020-01-01T00:00:00",
                         "title": "My Trip",
                         "locations": [{
                            "id": "xyz1",

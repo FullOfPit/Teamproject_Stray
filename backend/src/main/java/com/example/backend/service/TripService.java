@@ -29,7 +29,9 @@ public class TripService {
 
     public Trip add(Trip trip) {
         for (Location location : trip.getLocations()) {
-            location.setId(this.idGenerator.generateRandomId());
+            if (location.getId() == null) {
+                location.setId(this.idGenerator.generateRandomId());
+            }
         }
 
         return this.tripRepo.save(trip);
@@ -42,5 +44,15 @@ public class TripService {
             throw new TripNotRegisteredException();
         }
 
+    }
+
+    public Trip update(String id, Trip trip) throws TripNotRegisteredException {
+        trip.setId(id);
+
+        if (!this.tripRepo.existsById(id)) {
+            throw new TripNotRegisteredException();
+        }
+
+        return this.add(trip);
     }
 }

@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.AdditionalAnswers.returnsFirstArg;
 import static org.mockito.Mockito.*;
 
 class TripServiceTest {
@@ -43,21 +44,19 @@ class TripServiceTest {
         // given
         Trip trip = new Trip("abc1", "My Trip", List.of(
                 new Location("Kölner Dom", 50.941386546092225, 6.958270670147375),
-                new Location("Planten un Blomen", 53.5625456617408, 9.98188182570993)
+                new Location("existing-location-id", "Planten un Blomen", 53.5625456617408, 9.98188182570993)
         ));
 
         Trip tripWithAddedLocationIds = new Trip("abc1", "My Trip", List.of(
-                new Location("location-id-1", "Kölner Dom", 50.941386546092225, 6.958270670147375),
-                new Location("location-id-2", "Planten un Blomen", 53.5625456617408, 9.98188182570993)
+                new Location("new-location-id", "Kölner Dom", 50.941386546092225, 6.958270670147375),
+                new Location("existing-location-id", "Planten un Blomen", 53.5625456617408, 9.98188182570993)
         ));
 
         TripRepo tripRepo = mock(TripRepo.class);
         when(tripRepo.save(tripWithAddedLocationIds)).thenReturn(tripWithAddedLocationIds);
 
         IdGenerator idGenerator = mock(IdGenerator.class);
-        when(idGenerator.generateRandomId())
-                .thenReturn("location-id-1")
-                .thenReturn("location-id-2");
+        when(idGenerator.generateRandomId()).thenReturn("new-location-id");
 
         // when
         TripService tripService = new TripService(tripRepo, idGenerator);
@@ -65,6 +64,8 @@ class TripServiceTest {
 
         // then
         assertEquals(tripWithAddedLocationIds, actual);
+
+        verify(idGenerator, times(1)).generateRandomId();
         verify(tripRepo).save(tripWithAddedLocationIds);
     }
 
@@ -130,5 +131,91 @@ class TripServiceTest {
         Assertions.assertThrows(TripNotRegisteredException.class, () -> tripService.deleteById("abc1"));
     }
 
+    @Test
+    void update_updatesTrip_whenExists() throws TripNotRegisteredException {
+        // given
+        Trip trip = new Trip("some-id", "some trip", new ArrayList<>());
+
+        TripRepo tripRepo = mock(TripRepo.class);
+        when(tripRepo.existsById(any())).thenReturn(true);
+        when(tripRepo.save(any())).then(returnsFirstArg());
+
+        IdGenerator idGenerator = mock(IdGenerator.class);
+        when(idGenerator.generateRandomId()).thenReturn("new-location-id");
+
+        // when
+        TripService sut = new TripService(tripRepo, idGenerator);
+        Trip actual = sut.update(trip.getId(), trip);
+
+        // then
+        assertEquals(actual, trip);
+
+        verify(tripRepo).save(any());
+    }
+
+    @Test
+    void update_ensuresThatIdForNewLocationsIsGenerated() throws TripNotRegisteredException {
+        // given
+        Trip trip = new Trip("some-id", "some trip", new ArrayList<>(List.of(
+                new Location("Kölner Dom", 50.941386546092225, 6.958270670147375),
+                new Location("existing-location-id", "Planten un Blomen", 53.5625456617408, 9.98188182570993)
+        )));
+
+        TripRepo tripRepo = mock(TripRepo.class);
+        when(tripRepo.existsById(any())).thenReturn(true);
+        when(tripRepo.save(any())).then(returnsFirstArg());
+
+        IdGenerator idGenerator = mock(IdGenerator.class);
+        when(idGenerator.generateRandomId()).thenReturn("new-location-id");
+
+        List<String> expectedIds = List.of("new-location-id", "existing-location-id");
+
+        // when
+        TripService sut = new TripService(tripRepo, idGenerator);
+        Trip actual = sut.update(trip.getId(), trip);
+
+        // then
+        List<String> actualIds = actual.getLocations().stream().map(Location::getId).toList();
+        assertEquals(expectedIds, actualIds);
+
+        verify(idGenerator, times(1)).generateRandomId();
+        verify(tripRepo).save(any());
+    }
+
+    @Test
+    void update_ensuresMismatchBetweenGivenIdAndIdOfTripIsFixed() throws TripNotRegisteredException {
+        // given
+        String expectedId = "given-id";
+        Trip trip = new Trip("id-to-be-overwritten", "some trip", new ArrayList<>());
+
+        TripRepo tripRepo = mock(TripRepo.class);
+        when(tripRepo.existsById(expectedId)).thenReturn(true);
+        when(tripRepo.save(any())).then(returnsFirstArg());
+
+        IdGenerator idGenerator = mock(IdGenerator.class);
+
+        // when
+        TripService sut = new TripService(tripRepo, idGenerator);
+        Trip actual = sut.update(expectedId, trip);
+
+        // then
+        assertEquals(expectedId, actual.getId());
+
+        verify(tripRepo).save(any());
+    }
+
+    @Test
+    void update_throwsTripNotRegisteredException_whenNotExists() {
+        // given
+        TripRepo tripRepo = mock(TripRepo.class);
+        when(tripRepo.existsById(any())).thenReturn(false);
+
+        IdGenerator idGenerator = mock(IdGenerator.class);
+
+        // when + then
+        TripService sut = new TripService(tripRepo, idGenerator);
+
+        assertThrows(TripNotRegisteredException.class, () -> sut.update("does-not-matter", new Trip()));
+    }
 
 }

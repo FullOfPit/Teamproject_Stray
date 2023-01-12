@@ -1,12 +1,15 @@
 package com.example.backend.service;
 
+import com.example.backend.exception.TripNotRegisteredException;
 import com.example.backend.model.Location;
 import com.example.backend.model.Trip;
 import com.example.backend.repository.TripRepo;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -55,5 +58,33 @@ class TripServiceTest {
         // then
         assertEquals(tripWithAddedLocationIds, actual);
         verify(tripRepo).save(tripWithAddedLocationIds);
+    }
+
+    @Test
+    void getById_ReturnsTripCorrectlyWhenRequested() throws Exception {
+        //Given
+        TripRepo tripRepo = mock(TripRepo.class);
+
+        Trip testTrip = new Trip("TestId", "TestTripTitle", new ArrayList<>());
+        when(tripRepo.findById("TestId")).thenReturn(Optional.of(testTrip));
+        //When
+
+        TripService tripService = new TripService(tripRepo);
+        Trip actual = tripService.getById("TestId");
+
+        //Then
+        Assertions.assertEquals(new Trip("TestId", "TestTripTitle", new ArrayList<>()), actual);
+        verify(tripRepo).findById("TestId");
+    }
+
+    @Test
+    void getById_ReturnTripNotRegisteredException() {
+        //Given
+        TripRepo tripRepo = mock(TripRepo.class);
+        when(tripRepo.findById("TestId")).thenReturn(Optional.ofNullable(null));
+        //When
+        TripService tripService = new TripService(tripRepo);
+        //Then
+        Assertions.assertThrows(TripNotRegisteredException.class, () -> tripService.getById("TestId"));
     }
 }

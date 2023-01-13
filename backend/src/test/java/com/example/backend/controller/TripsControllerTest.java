@@ -22,7 +22,6 @@ import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-
 @SpringBootTest
 @AutoConfigureMockMvc
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
@@ -40,15 +39,12 @@ class TripsControllerTest {
     private Location testLocation1() {
         return new Location("xyz1", "Kölner Dom", 50.941386546092225, 6.958270670147375);
     }
-
     private Location testLocation2() {
         return new Location("xyz2", "Planten un Blomen", 53.5625456617408, 9.98188182570993);
     }
-
     private Trip testTrip1() {
         return new Trip("abc1", "My Trip", List.of(testLocation1(), testLocation2()));
     }
-
     private Trip testTrip2() {
         return new Trip("abc2", "My Trip 2", new ArrayList<>());
     }
@@ -221,4 +217,62 @@ class TripsControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(content().json(expected));
     }
+
+    @Test
+    public void update_updatesTripIfExists() throws Exception {
+        // given
+        Trip existingTrip = testTrip1();
+        this.tripRepo.save(existingTrip);
+
+        String expectedJsonNonStrict = String.format("""
+                 {
+                    "id": "%s",
+                    "title": "Changed title",
+                    "locations": [
+                        {
+                            "id": "xyz2",
+                            "name": "Updated location",
+                            "latitude": 53.5625456617408,
+                            "longitude": 9.98188182570993
+                        },
+                        {
+                            "name": "New Location",
+                            "latitude": 23.34,
+                            "longitude": 12.43
+                        }
+                    ]
+                }
+                """, existingTrip.getId());
+
+        // when + then
+        this.mvc.perform(
+                        put("/api/trips/" + existingTrip.getId())
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(expectedJsonNonStrict))
+                .andExpect(status().isOk())
+                .andExpect(content().json(expectedJsonNonStrict))
+                .andExpect(jsonPath("$.locations.*.id", allOf(
+                        hasSize(2),
+                        everyItem(notNullValue())
+                )));
+    }
+
+    @Test
+    void update_return404ErrorWhenIdNotRegistered() throws Exception {
+        // given
+        String givenJson = """
+                {
+                    "id": "does-not-exist",
+                    "title": "Does not matter",
+                    "locations": []
+                }
+                """;
+
+        // when + then
+        mvc.perform(put("/api/trips/does-not-exist")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(givenJson))
+                .andExpect(status().isNotFound());
+    }
+
 }

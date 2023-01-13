@@ -100,6 +100,33 @@ class TripServiceTest {
     }
 
     @Test
+    void add_generatesTimeStampForAddedTrip() {
+        // given
+        Trip trip = new Trip("abc1", "My Trip", List.of(
+                new Location("existing-location-id1","Kölner Dom", 50.941386546092225, 6.958270670147375),
+                new Location("existing-location-id2", "Planten un Blomen", 53.5625456617408, 9.98188182570993)
+        ));
+        TripRepo tripRepo = mock(TripRepo.class);
+        when(tripRepo.save(any())).then(returnsFirstArg());
+
+        IdGenerator idGenerator = mock(IdGenerator.class);
+
+        TimeStampGenerator timeStampGenerator = mock(TimeStampGenerator.class);
+        when(timeStampGenerator.generateTimeStamp())
+                .thenReturn(LocalDateTime.of(2020, 1, 1, 0, 0));
+
+        // when
+        TripService tripService = new TripService(tripRepo, idGenerator, timeStampGenerator);
+        Trip actual = tripService.add(trip);
+
+        // then
+        Assertions.assertEquals(LocalDateTime.of(2020, 1, 1, 0,0), actual.getTripTimeStamp());
+
+        verify(timeStampGenerator, times(1)).generateTimeStamp();
+
+    }
+
+    @Test
     void getById_ReturnsTripCorrectlyWhenRequested() throws Exception {
         //Given
         TripRepo tripRepo = mock(TripRepo.class);

@@ -8,7 +8,7 @@ import java.util.HashMap;
 import java.util.List;
 
 
-class DistanceMatrixTest {
+class MatrixTest {
 
     @Test
     void toGraph_WhenSymmetricDistanceMatrixThenReturnGraphCorrectly() {
@@ -46,7 +46,7 @@ class DistanceMatrixTest {
         matrix.add(List.of(0.,2.,5.,1.,0.));
 
         //then
-        DistanceMatrix distanceMatrix = new DistanceMatrix(vertexNames,matrix);
+        Matrix distanceMatrix = new Matrix(vertexNames,matrix);
         Graph actual = distanceMatrix.toGraph();
 
         Assertions.assertEquals(graph,actual);
@@ -80,7 +80,7 @@ class DistanceMatrixTest {
         matrix.add(List.of(1.,0.,2.,0.));
 
         //then
-        DistanceMatrix distanceMatrix = new DistanceMatrix(vertexNames,matrix);
+        Matrix distanceMatrix = new Matrix(vertexNames,matrix);
         Graph actual = distanceMatrix.toGraph();
 
         Assertions.assertEquals(graph,actual);
@@ -108,7 +108,7 @@ class DistanceMatrixTest {
         matrix.add(List.of(6.,0.,5.,2.));
 
         //then
-        DistanceMatrix distanceMatrix = new DistanceMatrix(vertexNames,matrix);
+        Matrix distanceMatrix = new Matrix(vertexNames,matrix);
         Graph actual = distanceMatrix.toGraph();
 
         Assertions.assertEquals(graph,actual);

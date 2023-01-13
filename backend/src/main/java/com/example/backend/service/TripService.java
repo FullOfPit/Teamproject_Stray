@@ -11,10 +11,10 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-
 @Service
 @RequiredArgsConstructor
 public class TripService {
+
     private final TripRepo tripRepo;
 
     private final IdGenerator idGenerator;
@@ -32,7 +32,9 @@ public class TripService {
 
     public Trip add(Trip trip) {
         for (Location location : trip.getLocations()) {
-            location.setId(this.idGenerator.generateRandomId());
+            if (location.getId() == null) {
+                location.setId(this.idGenerator.generateRandomId());
+            }
         }
         trip.setTripTimeStamp(timeStampGenerator.generateTimeStamp());
 
@@ -45,6 +47,15 @@ public class TripService {
         } else {
             throw new TripNotRegisteredException();
         }
+    }
 
+    public Trip update(String id, Trip trip) throws TripNotRegisteredException {
+        trip.setId(id);
+
+        if (!this.tripRepo.existsById(id)) {
+            throw new TripNotRegisteredException();
+        }
+
+        return this.add(trip);
     }
 }

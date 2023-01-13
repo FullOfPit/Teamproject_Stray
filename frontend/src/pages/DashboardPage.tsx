@@ -1,22 +1,13 @@
 import "./DashboardPage.css";
-import {useEffect, useState} from "react";
-import Trip from "../types/Trip";
-import Api from "../api/Api";
 import {useNavigate} from "react-router-dom";
 import Accordion from "../components/Accordion";
+import useGetTripsQuery from "../hooks/useGetTripsQuery";
 
 export default function DashboardPage() {
     // if not logged in, then navigate.to LoginPage?
 
     const navigate = useNavigate();
-    const [trips, setTrips] = useState<Trip[]>([]);
-
-    useEffect(() => {
-        (async () => {
-            const trips = await Api.getTrips();
-            setTrips(trips);
-        })();
-    }, []);
+    const {trips} = useGetTripsQuery();
 
     if (trips.length === 0) {
         navigate("/trips/create");

@@ -18,13 +18,13 @@ public class Trip {
     private String title;
     private List<Location> locations = new ArrayList<>();
 
-    public List<String> getLocationNames(){
-        List<String> locationNames = new ArrayList<>();
+    public List<String> getLocationIds(){
+        List<String> locationIds = new ArrayList<>();
 
         for (Location location : locations) {
-            locationNames.add(location.getName());
+            locationIds.add(location.getId());
         }
-        return locationNames;
+        return locationIds;
     }
 
     public List<List<Double>> getLocationGeos(){

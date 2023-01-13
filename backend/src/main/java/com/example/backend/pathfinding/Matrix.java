@@ -13,7 +13,6 @@ public class Matrix {
     List<String> vertexNames;
     List<List<Double>> matrix;
 
-
     public Graph toGraph(){
         Graph graph = new Graph(new HashMap<>(), new ArrayList<>());
 

@@ -38,7 +38,7 @@ public class TripsController {
     }
 
     @GetMapping("/{id}/shortest-path")
-    public List<String> getShortestPath(@PathVariable String id) throws TripNotRegisteredException {
+    public List<Location> getShortestPath(@PathVariable String id) throws TripNotRegisteredException {
         return this.locationService.getShortestPathById(id);
     }
 

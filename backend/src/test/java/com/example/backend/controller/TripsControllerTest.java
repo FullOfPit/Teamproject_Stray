@@ -159,6 +159,7 @@ class TripsControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(content().json(given))
                 .andExpect(jsonPath("$.id", notNullValue()))
+                .andExpect(jsonPath("$.tripTimeStamp", notNullValue()))
                 .andExpect(jsonPath("$.locations.*.id", allOf(
                         hasSize(2),
                         everyItem(notNullValue())

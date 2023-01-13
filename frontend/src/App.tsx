@@ -11,7 +11,7 @@ function App() {
     return (
         <>
             <Header/>
-            <main className="page-content">
+            <main className="page-content container">
               <Routes>
                 <Route path="/" element={<DashboardPage />} />
                 <Route path="/login" element={<LoginPage />} />

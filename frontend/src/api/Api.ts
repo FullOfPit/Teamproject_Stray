@@ -7,7 +7,7 @@ const client = axios.create({
 
 module Api {
     export async function getTrips(): Promise<Trip[]> {
-        const response = await client.get("/");
+        const response = await client.get("");
 
         return response.data;
     }

@@ -1,6 +1,7 @@
 package com.example.backend.service;
 
 import com.example.backend.exception.TripNotRegisteredException;
+import com.example.backend.generator.IdGenerator;
 import com.example.backend.model.Location;
 import com.example.backend.model.Trip;
 import com.example.backend.repository.TripRepo;
@@ -15,6 +16,8 @@ import java.util.List;
 public class TripService {
     private final TripRepo tripRepo;
 
+    private final IdGenerator idGenerator;
+
     public List<Trip> getAll() {
         return this.tripRepo.findAll();
     }
@@ -25,10 +28,8 @@ public class TripService {
     }
 
     public Trip add(Trip trip) {
-        List<Location> locations = trip.getLocations();
-        for (int i = 0; i < locations.size(); i++) {
-            Location location = locations.get(i);
-            location.setId(i + 1);
+        for (Location location : trip.getLocations()) {
+            location.setId(this.idGenerator.generateRandomId());
         }
 
         return this.tripRepo.save(trip);

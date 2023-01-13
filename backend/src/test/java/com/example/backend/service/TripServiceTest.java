@@ -19,6 +19,7 @@ import static org.mockito.Mockito.*;
 
 class TripServiceTest {
 
+
     private LocalDateTime testTimeStamp() {
         return LocalDateTime.of(2020, 1, 1, 0, 0);
     }
@@ -46,7 +47,72 @@ class TripServiceTest {
     }
 
     @Test
-    void add_addsTripToRepoAndReturnsTrip() {
+    void add_automaticallyInsertsTimeStampWhenTripAdded_WithoutLocationIDs() {
+        //Given
+        Trip trip = new Trip("abc1", "My Trip", List.of(
+                new Location("Kölner Dom", 50.941386546092225, 6.958270670147375),
+                new Location("Planten un Blomen", 53.5625456617408, 9.98188182570993)
+        ));
+
+        Trip tripWithTestTimeStamp = new Trip("abc1", testTimeStamp(), "My Trip", List.of(
+                new Location("Kölner Dom", 50.941386546092225, 6.958270670147375),
+                new Location("Planten un Blomen", 53.5625456617408, 9.98188182570993)
+        ));
+
+        TripRepo tripRepo = mock(TripRepo.class);
+        when(tripRepo.save(trip)).thenReturn(trip);
+
+        IdGenerator idGenerator = mock(IdGenerator.class);
+
+        TimeStampGenerator timeStampGenerator = mock(TimeStampGenerator.class);
+        when(timeStampGenerator.generateTimeStamp())
+                .thenReturn(LocalDateTime.of(2020, 1, 1, 0, 0));
+        //When
+
+        TripService tripService = new TripService(tripRepo, idGenerator, timeStampGenerator);
+        Trip actual = tripService.add(trip);
+
+        //Then
+        assertEquals(tripWithTestTimeStamp, actual);
+        verify(tripRepo).save(tripWithTestTimeStamp);
+    }
+
+    @Test
+    void add_automaticallyInsertsTimeStampWhenTripAdded_WithLocationIDs() {
+        //Given
+        Trip trip = new Trip("abc1", "My Trip", List.of(
+                new Location("location-id-1","Kölner Dom", 50.941386546092225, 6.958270670147375),
+                new Location("location-id-2","Planten un Blomen", 53.5625456617408, 9.98188182570993)
+        ));
+
+        Trip tripWithTestTimeStamp = new Trip("abc1", testTimeStamp(), "My Trip", List.of(
+                new Location("location-id-1","Kölner Dom", 50.941386546092225, 6.958270670147375),
+                new Location("location-id-2","Planten un Blomen", 53.5625456617408, 9.98188182570993)
+        ));
+
+        TripRepo tripRepo = mock(TripRepo.class);
+        when(tripRepo.save(trip)).thenReturn(trip);
+
+        IdGenerator idGenerator = mock(IdGenerator.class);
+        when(idGenerator.generateRandomId())
+                .thenReturn("location-id-1")
+                .thenReturn("location-id-2");
+
+        TimeStampGenerator timeStampGenerator = mock(TimeStampGenerator.class);
+        when(timeStampGenerator.generateTimeStamp())
+                .thenReturn(LocalDateTime.of(2020, 1, 1, 0, 0));
+        //When
+
+        TripService tripService = new TripService(tripRepo, idGenerator, timeStampGenerator);
+        Trip actual = tripService.add(trip);
+
+        //Then
+        assertEquals(tripWithTestTimeStamp, actual);
+        verify(tripRepo).save(tripWithTestTimeStamp);
+    }
+
+    @Test
+    void add_addsTripToRepoAndReturnsTrip_WithTimeStamp_AddsLocationIDs() {
         // given
         Trip trip = new Trip("abc1", testTimeStamp(), "My Trip", List.of(
                 new Location("Kölner Dom", 50.941386546092225, 6.958270670147375),

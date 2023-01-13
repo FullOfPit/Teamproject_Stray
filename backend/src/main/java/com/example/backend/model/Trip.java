@@ -17,4 +17,10 @@ public class Trip {
     private LocalDateTime tripTimeStamp;
     private String title;
     private List<Location> locations;
+
+    public Trip(String id, String title, List<Location> locations) {
+        this.id = id;
+        this.title = title;
+        this.locations = locations;
+    }
 }

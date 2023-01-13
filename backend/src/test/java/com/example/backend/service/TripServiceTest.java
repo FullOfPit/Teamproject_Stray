@@ -42,31 +42,48 @@ class TripServiceTest {
     @Test
     void add_addsTripToRepoAndReturnsTrip() {
         // given
-        Trip trip = new Trip("abc1", "My Trip", List.of(
-                new Location("Kölner Dom", 50.941386546092225, 6.958270670147375),
-                new Location("existing-location-id", "Planten un Blomen", 53.5625456617408, 9.98188182570993)
-        ));
-
-        Trip tripWithAddedLocationIds = new Trip("abc1", "My Trip", List.of(
-                new Location("new-location-id", "Kölner Dom", 50.941386546092225, 6.958270670147375),
-                new Location("existing-location-id", "Planten un Blomen", 53.5625456617408, 9.98188182570993)
-        ));
+        Trip trip = new Trip("abc123", "My Trip", new ArrayList<>());
 
         TripRepo tripRepo = mock(TripRepo.class);
-        when(tripRepo.save(tripWithAddedLocationIds)).thenReturn(tripWithAddedLocationIds);
+        when(tripRepo.save(trip)).thenReturn(trip);
 
         IdGenerator idGenerator = mock(IdGenerator.class);
-        when(idGenerator.generateRandomId()).thenReturn("new-location-id");
 
         // when
         TripService tripService = new TripService(tripRepo, idGenerator);
         Trip actual = tripService.add(trip);
 
         // then
-        assertEquals(tripWithAddedLocationIds, actual);
+        assertEquals(trip, actual);
+
+        verify(tripRepo).save(trip);
+    }
+
+    @Test
+    void add_generatesIdsForAllLocationsWithoutId() {
+        // given
+        Trip trip = new Trip("abc1", "My Trip", List.of(
+                new Location("Kölner Dom", 50.941386546092225, 6.958270670147375),
+                new Location("existing-location-id", "Planten un Blomen", 53.5625456617408, 9.98188182570993)
+        ));
+
+        TripRepo tripRepo = mock(TripRepo.class);
+        when(tripRepo.save(any())).then(returnsFirstArg());
+
+        IdGenerator idGenerator = mock(IdGenerator.class);
+        when(idGenerator.generateRandomId()).thenReturn("new-location-id");
+
+        List<String> expectedLocationIds = List.of("new-location-id", "existing-location-id");
+
+        // when
+        TripService tripService = new TripService(tripRepo, idGenerator);
+        Trip actual = tripService.add(trip);
+
+        // then
+        List<String> actualLocationIds = actual.getLocations().stream().map(Location::getId).toList();
+        assertEquals(expectedLocationIds, actualLocationIds);
 
         verify(idGenerator, times(1)).generateRandomId();
-        verify(tripRepo).save(tripWithAddedLocationIds);
     }
 
     @Test

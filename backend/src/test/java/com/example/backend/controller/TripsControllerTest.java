@@ -178,7 +178,7 @@ class TripsControllerTest {
         Trip existingTrip = testTrip1();
         this.tripRepo.save(existingTrip);
 
-        String json = String.format("""
+        String expectedJsonNonStrict = String.format("""
                  {
                     "id": "%s",
                     "title": "Changed title",
@@ -202,9 +202,9 @@ class TripsControllerTest {
         this.mvc.perform(
                         put("/api/trips/" + existingTrip.getId())
                                 .contentType(MediaType.APPLICATION_JSON)
-                                .content(json))
+                                .content(expectedJsonNonStrict))
                 .andExpect(status().isOk())
-                .andExpect(content().json(json))
+                .andExpect(content().json(expectedJsonNonStrict))
                 .andExpect(jsonPath("$.locations.*.id", allOf(
                         hasSize(2),
                         everyItem(notNullValue())

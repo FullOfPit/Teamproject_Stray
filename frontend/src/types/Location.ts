@@ -1,8 +1,8 @@
 type Location = {
     id: string,
     name: string,
-    lat: number,
-    long: number
+    latitude: number,
+    longitude: number
 }
 
 export default Location;

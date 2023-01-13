@@ -1,0 +1,17 @@
+.accordion-item-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.accordion-item-handler {
+    cursor: pointer;
+}
+
+.accordion-body[data-expanded=true] {
+    display: block;
+}
+
+.accordion-body[data-expanded=false] {
+    display: none;
+}

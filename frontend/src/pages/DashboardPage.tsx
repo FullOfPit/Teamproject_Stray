@@ -1,18 +1,32 @@
 import "./DashboardPage.css";
+import {useEffect, useState} from "react";
+import Trip from "../types/Trip";
+import Api from "../api/Api";
+import {useNavigate} from "react-router-dom";
+import Accordion from "../components/Accordion";
 
 export default function DashboardPage() {
     // if not logged in, then navigate.to LoginPage?
 
-    // get all trips from API
-    // if no trips yet, navigate.to TripFormPage?
+    const navigate = useNavigate();
+    const [trips, setTrips] = useState<Trip[]>([]);
 
-    // show all trips in list of accordions
-    // on click go to Detail page
-    // on "open accordion" -> show map
+    useEffect(() => {
+        (async () => {
+            const trips = await Api.getTrips();
+            setTrips(trips);
+        })();
+    }, []);
+
+    if (trips.length === 0) {
+        navigate("/trips/create");
+    }
 
     return (
-        <>
-            <h1>DashboardPage</h1>
-        </>
+        <div className="dashboard-container">
+            <h1>Planned Trips</h1>
+
+            <Accordion trips={trips}/>
+        </div>
     );
 }

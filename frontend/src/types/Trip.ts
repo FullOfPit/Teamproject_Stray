@@ -1,3 +1,5 @@
+import Location from "./Location";
+
 type Trip = {
     id: string,
     title: string,

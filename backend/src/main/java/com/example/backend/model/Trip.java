@@ -35,7 +35,6 @@ public class Trip {
                         location.getLatitude()))
                 .toList();
     }
-    private List<Location> locations;
 
     public Trip(String id, String title, List<Location> locations) {
         this.id = id;

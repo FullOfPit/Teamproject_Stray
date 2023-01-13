@@ -44,10 +44,10 @@ class TripsControllerTest {
         return new Location("xyz2", "Planten un Blomen", 53.5625456617408, 9.98188182570993);
     }
     private Trip testTrip1() {
-        return new Trip("abc1",testTimeStamp(), "My Trip", List.of(testLocation1(), testLocation2()));
+        return new Trip("abc1", testTimeStamp(), "My Trip", List.of(testLocation1(), testLocation2()));
     }
     private Trip testTrip2() {
-        return new Trip("abc2",testTimeStamp(), "My Trip 2", new ArrayList<>());
+        return new Trip("abc2", testTimeStamp(), "My Trip 2", new ArrayList<>());
     }
 
     private List<Trip> testTripList() {

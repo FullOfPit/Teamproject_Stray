@@ -2,12 +2,14 @@ package com.example.backend.service;
 
 import com.example.backend.exception.TripNotRegisteredException;
 import com.example.backend.generator.IdGenerator;
+import com.example.backend.generator.TimeStampGenerator;
 import com.example.backend.model.Location;
 import com.example.backend.model.Trip;
 import com.example.backend.repository.TripRepo;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -18,20 +20,26 @@ import static org.mockito.Mockito.*;
 
 class TripServiceTest {
 
+
+    private LocalDateTime testTimeStamp() {
+        return LocalDateTime.of(2020, 1, 1, 0, 0);
+    }
+
     @Test
     void getAll_returnTripsFromRepo() {
         //given
         List<Trip> expected = new ArrayList<>(List.of(
-                new Trip("abc1", "My Trip", new ArrayList<>()),
-                new Trip("abc2", "My Trip 2", new ArrayList<>())
+                new Trip("abc1",testTimeStamp(), "My Trip", new ArrayList<>()),
+                new Trip("abc2",testTimeStamp(), "My Trip 2", new ArrayList<>())
         ));
         TripRepo tripRepo = mock(TripRepo.class);
         when(tripRepo.findAll()).thenReturn(expected);
 
         IdGenerator idGenerator = mock(IdGenerator.class);
+        TimeStampGenerator timeStampGenerator = mock(TimeStampGenerator.class);
 
         //when
-        TripService tripService = new TripService(tripRepo, idGenerator);
+        TripService tripService = new TripService(tripRepo, idGenerator,timeStampGenerator);
         List<Trip> actual = tripService.getAll();
 
         //then
@@ -48,9 +56,10 @@ class TripServiceTest {
         when(tripRepo.save(trip)).thenReturn(trip);
 
         IdGenerator idGenerator = mock(IdGenerator.class);
+        TimeStampGenerator timeStampGenerator = mock(TimeStampGenerator.class);
 
         // when
-        TripService tripService = new TripService(tripRepo, idGenerator);
+        TripService tripService = new TripService(tripRepo, idGenerator, timeStampGenerator);
         Trip actual = tripService.add(trip);
 
         // then
@@ -75,8 +84,12 @@ class TripServiceTest {
 
         List<String> expectedLocationIds = List.of("new-location-id", "existing-location-id");
 
+        TimeStampGenerator timeStampGenerator = mock(TimeStampGenerator.class);
+        when(timeStampGenerator.generateTimeStamp())
+                .thenReturn(LocalDateTime.of(2020, 1, 1, 0, 0));
+
         // when
-        TripService tripService = new TripService(tripRepo, idGenerator);
+        TripService tripService = new TripService(tripRepo, idGenerator, timeStampGenerator);
         Trip actual = tripService.add(trip);
 
         // then
@@ -87,22 +100,53 @@ class TripServiceTest {
     }
 
     @Test
+    void add_generatesTimeStampForAddedTrip() {
+        // given
+        Trip trip = new Trip("abc1", "My Trip", List.of(
+                new Location("existing-location-id1","Kölner Dom", 50.941386546092225, 6.958270670147375),
+                new Location("existing-location-id2", "Planten un Blomen", 53.5625456617408, 9.98188182570993)
+        ));
+        TripRepo tripRepo = mock(TripRepo.class);
+        when(tripRepo.save(any())).then(returnsFirstArg());
+
+        IdGenerator idGenerator = mock(IdGenerator.class);
+
+        TimeStampGenerator timeStampGenerator = mock(TimeStampGenerator.class);
+        when(timeStampGenerator.generateTimeStamp())
+                .thenReturn(LocalDateTime.of(2020, 1, 1, 0, 0));
+
+        // when
+        TripService tripService = new TripService(tripRepo, idGenerator, timeStampGenerator);
+        Trip actual = tripService.add(trip);
+
+        // then
+        Assertions.assertEquals(LocalDateTime.of(2020, 1, 1, 0,0), actual.getTripTimeStamp());
+
+        verify(timeStampGenerator, times(1)).generateTimeStamp();
+
+    }
+
+    @Test
     void getById_ReturnsTripCorrectlyWhenRequested() throws Exception {
         //Given
         TripRepo tripRepo = mock(TripRepo.class);
 
-        Trip testTrip = new Trip("TestId", "TestTripTitle", new ArrayList<>());
+        Trip testTrip = new Trip("TestId", testTimeStamp(), "TestTripTitle", new ArrayList<>());
         when(tripRepo.findById("TestId")).thenReturn(Optional.of(testTrip));
 
         IdGenerator idGenerator = mock(IdGenerator.class);
+        TimeStampGenerator timeStampGenerator = mock(TimeStampGenerator.class);
 
         //When
 
-        TripService tripService = new TripService(tripRepo, idGenerator);
+        TripService tripService = new TripService(tripRepo, idGenerator, timeStampGenerator);
         Trip actual = tripService.getById("TestId");
 
         //Then
-        Assertions.assertEquals(new Trip("TestId", "TestTripTitle", new ArrayList<>()), actual);
+        Assertions.assertEquals(new Trip("TestId",
+                LocalDateTime.of(2020, 1, 1, 0, 0),
+                "TestTripTitle", new ArrayList<>()),
+                actual);
         verify(tripRepo).findById("TestId");
     }
 
@@ -113,9 +157,10 @@ class TripServiceTest {
         when(tripRepo.findById("TestId")).thenReturn(Optional.ofNullable(null));
 
         IdGenerator idGenerator = mock(IdGenerator.class);
+        TimeStampGenerator timeStampGenerator = mock(TimeStampGenerator.class);
 
         //When
-        TripService tripService = new TripService(tripRepo, idGenerator);
+        TripService tripService = new TripService(tripRepo, idGenerator, timeStampGenerator);
         //Then
         Assertions.assertThrows(TripNotRegisteredException.class, () -> tripService.getById("TestId"));
     }
@@ -127,8 +172,9 @@ class TripServiceTest {
         when(tripRepo.existsById("abc1")).thenReturn(true);
 
         IdGenerator idGenerator = mock(IdGenerator.class);
+        TimeStampGenerator timeStampGenerator = mock(TimeStampGenerator.class);
 
-        TripService tripService = new TripService(tripRepo, idGenerator);
+        TripService tripService = new TripService(tripRepo, idGenerator, timeStampGenerator);
         //When
         tripService.deleteById("abc1");
         //Then
@@ -142,8 +188,9 @@ class TripServiceTest {
         when(tripRepo.existsById("abc1")).thenReturn(false);
 
         IdGenerator idGenerator = mock(IdGenerator.class);
+        TimeStampGenerator timeStampGenerator = mock(TimeStampGenerator.class);
 
-        TripService tripService = new TripService(tripRepo, idGenerator);
+        TripService tripService = new TripService(tripRepo, idGenerator, timeStampGenerator);
         //When - Then
         Assertions.assertThrows(TripNotRegisteredException.class, () -> tripService.deleteById("abc1"));
     }
@@ -160,8 +207,10 @@ class TripServiceTest {
         IdGenerator idGenerator = mock(IdGenerator.class);
         when(idGenerator.generateRandomId()).thenReturn("new-location-id");
 
+        TimeStampGenerator timeStampGenerator = mock(TimeStampGenerator.class);
+
         // when
-        TripService sut = new TripService(tripRepo, idGenerator);
+        TripService sut = new TripService(tripRepo, idGenerator, timeStampGenerator);
         Trip actual = sut.update(trip.getId(), trip);
 
         // then
@@ -185,10 +234,12 @@ class TripServiceTest {
         IdGenerator idGenerator = mock(IdGenerator.class);
         when(idGenerator.generateRandomId()).thenReturn("new-location-id");
 
+        TimeStampGenerator timeStampGenerator = mock(TimeStampGenerator.class);
+
         List<String> expectedIds = List.of("new-location-id", "existing-location-id");
 
         // when
-        TripService sut = new TripService(tripRepo, idGenerator);
+        TripService sut = new TripService(tripRepo, idGenerator, timeStampGenerator);
         Trip actual = sut.update(trip.getId(), trip);
 
         // then
@@ -210,9 +261,10 @@ class TripServiceTest {
         when(tripRepo.save(any())).then(returnsFirstArg());
 
         IdGenerator idGenerator = mock(IdGenerator.class);
+        TimeStampGenerator timeStampGenerator = mock(TimeStampGenerator.class);
 
         // when
-        TripService sut = new TripService(tripRepo, idGenerator);
+        TripService sut = new TripService(tripRepo, idGenerator, timeStampGenerator);
         Trip actual = sut.update(expectedId, trip);
 
         // then
@@ -228,9 +280,10 @@ class TripServiceTest {
         when(tripRepo.existsById(any())).thenReturn(false);
 
         IdGenerator idGenerator = mock(IdGenerator.class);
+        TimeStampGenerator timeStampGenerator = mock(TimeStampGenerator.class);
 
         // when + then
-        TripService sut = new TripService(tripRepo, idGenerator);
+        TripService sut = new TripService(tripRepo, idGenerator, timeStampGenerator);
 
         assertThrows(TripNotRegisteredException.class, () -> sut.update("does-not-matter", new Trip()));
     }

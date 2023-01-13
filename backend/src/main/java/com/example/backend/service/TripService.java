@@ -2,6 +2,7 @@ package com.example.backend.service;
 
 import com.example.backend.exception.TripNotRegisteredException;
 import com.example.backend.generator.IdGenerator;
+import com.example.backend.generator.TimeStampGenerator;
 import com.example.backend.model.Location;
 import com.example.backend.model.Trip;
 import com.example.backend.repository.TripRepo;
@@ -18,6 +19,8 @@ public class TripService {
 
     private final IdGenerator idGenerator;
 
+    private final TimeStampGenerator timeStampGenerator;
+
     public List<Trip> getAll() {
         return this.tripRepo.findAll();
     }
@@ -33,6 +36,7 @@ public class TripService {
                 location.setId(this.idGenerator.generateRandomId());
             }
         }
+        trip.setTripTimeStamp(timeStampGenerator.generateTimeStamp());
 
         return this.tripRepo.save(trip);
     }

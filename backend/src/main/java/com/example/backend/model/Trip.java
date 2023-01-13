@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 
 import java.util.ArrayList;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Data
@@ -15,7 +16,7 @@ import java.util.List;
 public class Trip {
     @Id
     private String id;
-
+    private LocalDateTime tripTimeStamp;
     private String title;
     private List<Location> locations = new ArrayList<>();
 
@@ -33,5 +34,11 @@ public class Trip {
                         location.getLongitude(),
                         location.getLatitude()))
                 .toList();
+    }
+
+    public Trip(String id, String title, List<Location> locations) {
+        this.id = id;
+        this.title = title;
+        this.locations = locations;
     }
 }

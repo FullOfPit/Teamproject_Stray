@@ -11,7 +11,6 @@ import com.example.backend.repository.TripRepo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -19,7 +18,6 @@ import java.util.List;
 public class LocationService {
     private final TripRepo tripRepo;
     private final OpenServiceApiClient client;
-
     private final FindShortestPath path;
 
     public List<String> getShortestPathById(String id) throws TripNotRegisteredException {

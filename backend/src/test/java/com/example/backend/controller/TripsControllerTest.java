@@ -171,4 +171,62 @@ class TripsControllerTest {
         mvc.perform(delete("/api/trips/NONEREGISTEREDID"))
                 .andExpect(status().isNotFound());
     }
+
+    @Test
+    public void update_updatesTripIfExists() throws Exception {
+        // given
+        Trip existingTrip = testTrip1();
+        this.tripRepo.save(existingTrip);
+
+        String expectedJsonNonStrict = String.format("""
+                 {
+                    "id": "%s",
+                    "title": "Changed title",
+                    "locations": [
+                        {
+                            "id": "xyz2",
+                            "name": "Updated location",
+                            "latitude": 53.5625456617408,
+                            "longitude": 9.98188182570993
+                        },
+                        {
+                            "name": "New Location",
+                            "latitude": 23.34,
+                            "longitude": 12.43
+                        }
+                    ]
+                }
+                """, existingTrip.getId());
+
+        // when + then
+        this.mvc.perform(
+                        put("/api/trips/" + existingTrip.getId())
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(expectedJsonNonStrict))
+                .andExpect(status().isOk())
+                .andExpect(content().json(expectedJsonNonStrict))
+                .andExpect(jsonPath("$.locations.*.id", allOf(
+                        hasSize(2),
+                        everyItem(notNullValue())
+                )));
+    }
+
+    @Test
+    void update_return404ErrorWhenIdNotRegistered() throws Exception {
+        // given
+        String givenJson = """
+                {
+                    "id": "does-not-exist",
+                    "title": "Does not matter",
+                    "locations": []
+                }
+                """;
+
+        // when + then
+        mvc.perform(put("/api/trips/does-not-exist")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(givenJson))
+                .andExpect(status().isNotFound());
+    }
+
 }

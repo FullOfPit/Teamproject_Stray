@@ -34,4 +34,9 @@ public class TripsController {
         this.tripService.deleteById(Id);
     }
 
+    @PutMapping("/{id}")
+    public Trip update(@PathVariable String id, @RequestBody Trip trip) throws TripNotRegisteredException {
+        return this.tripService.update(id, trip);
+    }
+
 }

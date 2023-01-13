@@ -31,9 +31,9 @@ public class OpenServiceApiClient {
                 .post()
                 .uri("/foot-walking")
                 .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-                .bodyValue(matrixServiceRequest) // Object der ApiRequest Klasse mit Daten, die wir schicken wollen
+                .bodyValue(matrixServiceRequest)
                 .retrieve()
-                .toEntity(MatrixServiceResponse.class) // ApiResponse Klasse
+                .toEntity(MatrixServiceResponse.class)
                 .block()
                 .getBody();
     }

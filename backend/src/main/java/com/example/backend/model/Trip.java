@@ -1,5 +1,6 @@
 package com.example.backend.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -18,26 +19,19 @@ public class Trip {
     private String title;
     private List<Location> locations = new ArrayList<>();
 
+    @JsonIgnore
     public List<String> getLocationIds(){
-        List<String> locationIds = new ArrayList<>();
-
-        for (Location location : locations) {
-            locationIds.add(location.getId());
-        }
-        return locationIds;
+        return this.getLocations().stream().map(location -> location.getId()).toList();
     }
 
+    @JsonIgnore
     public List<List<Double>> getLocationGeos(){
-        List<List<Double>> locationGeos = new ArrayList<>();
-
-        for (Location location : locations) {
-            locationGeos.add(
+        return this.getLocations()
+                .stream()
+                .map(location ->
                     List.of(
-                            location.getLongitude(),
-                            location.getLatitude()
-                    )
-            );
-        }
-        return locationGeos;
+                        location.getLongitude(),
+                        location.getLatitude()))
+                .toList();
     }
 }

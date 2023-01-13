@@ -121,7 +121,6 @@ class TripsControllerTest {
                 """;
 
         //When - Then
-
         mvc.perform(get("/api/trips/abc1"))
                 .andExpect(status().isOk())
                 .andExpect(content().json(expected, true));

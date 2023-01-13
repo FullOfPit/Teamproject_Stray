@@ -36,8 +36,8 @@ class FindShortestPathTest {
         graph.addDirectedEdge(new Edge("E", "C", 5));
         graph.addDirectedEdge(new Edge("E", "D", 1));
 
-        FindShortestPath path = new FindShortestPath(graph, new Vertex("A", 0), new ArrayList<>(), new ArrayList<>());
-        List<Vertex> shortestPath = path.findShortestPath();
+        FindShortestPath path = new FindShortestPath(new ArrayList<>(), new ArrayList<>());
+        List<Vertex> shortestPath = path.findShortestPath(graph, new Vertex("A", 0));
         List<String> actual = shortestPath.stream().map(vertex -> vertex.getName()).collect(Collectors.toList());
 
         Assertions.assertEquals(List.of("A", "D", "E", "B", "C"),actual);
@@ -73,8 +73,8 @@ class FindShortestPathTest {
         graph.addDirectedEdge(new Edge("F", "D", 2));
         graph.addDirectedEdge(new Edge("F", "E", 1));
 
-        FindShortestPath path = new FindShortestPath(graph, new Vertex("A", 0), new ArrayList<>(), new ArrayList<>());
-        List<Vertex> shortestPath = path.findShortestPath();
+        FindShortestPath path = new FindShortestPath(new ArrayList<>(), new ArrayList<>());
+        List<Vertex> shortestPath = path.findShortestPath(graph, new Vertex("A", 0));
         List<String> actual = shortestPath.stream().map(vertex -> vertex.getName()).collect(Collectors.toList());
 
         Assertions.assertEquals(List.of("A", "B", "D", "E", "F", "C"),actual);
@@ -105,8 +105,8 @@ class FindShortestPathTest {
         graph.addDirectedEdge(new Edge("E", "C", 5));
         graph.addDirectedEdge(new Edge("E", "D", 1));
 
-        FindShortestPath path = new FindShortestPath(graph, new Vertex("A", 0), new ArrayList<>(), new ArrayList<>());
-        List<Vertex> shortestPath = path.findShortestPath();
+        FindShortestPath path = new FindShortestPath(new ArrayList<>(), new ArrayList<>());
+        List<Vertex> shortestPath = path.findShortestPath(graph, new Vertex("A", 0));
         List<String> actual = shortestPath.stream().map(vertex -> vertex.getName()).collect(Collectors.toList());
 
         Assertions.assertEquals(List.of("A", "D", "B", "E", "C"),actual);

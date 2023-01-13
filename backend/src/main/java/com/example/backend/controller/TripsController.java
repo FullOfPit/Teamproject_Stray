@@ -32,16 +32,15 @@ public class TripsController {
         return this.tripService.add(trip);
     }
 
-    @GetMapping("/{id}/shortest-path")
-    public List<Location> getShortestPath(@PathVariable String id) {
-        // @Todo wenn trip nicht existiert dann HTTPStatusCode 404
-
-        return this.locationService.getShortestPathById(id);
-    }
-
     @DeleteMapping(path = "/{Id}")
     public void deleteById(@PathVariable String Id) throws TripNotRegisteredException {
         this.tripService.deleteById(Id);
     }
+
+    @GetMapping("/{id}/shortest-path")
+    public List<String> getShortestPath(@PathVariable String id) throws TripNotRegisteredException {
+        return this.locationService.getShortestPathById(id);
+    }
+
 
 }

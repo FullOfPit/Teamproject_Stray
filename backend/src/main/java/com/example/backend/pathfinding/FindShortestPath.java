@@ -2,6 +2,7 @@ package com.example.backend.pathfinding;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
 import java.util.List;
@@ -10,24 +11,23 @@ import java.util.stream.Collectors;
 
 import static java.lang.Double.POSITIVE_INFINITY;
 
+@Component
 @Data
 @AllArgsConstructor
 public class FindShortestPath {
-    private Graph graph;
-    private Vertex source;
     private List<Vertex> visited;
     private List<Vertex> unvisited;
 
 
-    public List<Vertex> findShortestPath() {
-        initialize();
+    public List<Vertex> findShortestPath(Graph graph, Vertex source) {
+        initialize(graph, source);
 
         while (!this.unvisited.isEmpty()) {
             Vertex evaluatedVertex = findVertexWithMinDistanceToSource();
             this.unvisited.remove(evaluatedVertex);
             this.visited.add(evaluatedVertex);
 
-            Map<Vertex, Double> neighbors = findDistancesToUnvisitedNeighbors(evaluatedVertex);
+            Map<Vertex, Double> neighbors = findDistancesToUnvisitedNeighbors(graph, evaluatedVertex);
             for (Vertex vertex : neighbors.keySet()) {
                 double distance = neighbors.get(vertex);
                 double alternativeDistanceToSource = evaluatedVertex.getDistanceToSource() + distance;
@@ -39,8 +39,8 @@ public class FindShortestPath {
         return this.visited;
     }
 
-    public void initialize() {
-        Map<String, Vertex> vertices = this.graph.getVertices();
+    public void initialize(Graph graph, Vertex source) {
+        Map<String, Vertex> vertices = graph.getVertices();
         for (Vertex vertex : vertices.values()) {
             if (vertex.getName().equals(source.getName())) {
                 vertex.setDistanceToSource(0);
@@ -61,11 +61,11 @@ public class FindShortestPath {
         return minVertex;
     }
 
-    public Map<Vertex, Double> findDistancesToUnvisitedNeighbors(Vertex vertex) {
+    public Map<Vertex, Double> findDistancesToUnvisitedNeighbors(Graph graph,Vertex vertex) {
         Map<Vertex, Double> neighbors = new HashMap<>();
         List<String> visitedListNames = visited.stream().map(v -> v.getName()).toList();
 
-        for (Edge edge : this.graph.getEdges()) {
+        for (Edge edge : graph.getEdges()) {
             if (edge.getStartVertex().equals(vertex.getName())) {
                 Vertex endVertex = graph.getVertices().get(edge.getEndVertex());
                     if (!visitedListNames.contains(endVertex.getName())) {

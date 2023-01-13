@@ -10,10 +10,10 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-
 @Service
 @RequiredArgsConstructor
 public class TripService {
+
     private final TripRepo tripRepo;
 
     private final IdGenerator idGenerator;
@@ -43,7 +43,6 @@ public class TripService {
         } else {
             throw new TripNotRegisteredException();
         }
-
     }
 
     public Trip update(String id, Trip trip) throws TripNotRegisteredException {

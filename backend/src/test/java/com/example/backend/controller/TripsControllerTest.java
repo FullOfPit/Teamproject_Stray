@@ -1,12 +1,15 @@
 package com.example.backend.controller;
 
+import com.example.backend.client.OpenServiceApiClient;
 import com.example.backend.model.Location;
+import com.example.backend.model.MatrixServiceResponse;
 import com.example.backend.model.Trip;
 import com.example.backend.repository.TripRepo;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.web.servlet.MockMvc;
@@ -15,6 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.hamcrest.Matchers.*;
+import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -25,6 +29,10 @@ class TripsControllerTest {
 
     @Autowired
     private MockMvc mvc;
+
+    @MockBean
+    private OpenServiceApiClient client;
+
     @Autowired
     private TripRepo tripRepo;
 
@@ -113,7 +121,6 @@ class TripsControllerTest {
                 """;
 
         //When - Then
-
         mvc.perform(get("/api/trips/abc1"))
                 .andExpect(status().isOk())
                 .andExpect(content().json(expected, true));
@@ -145,9 +152,9 @@ class TripsControllerTest {
 
         // when + then
         this.mvc.perform(
-                post("/api/trips")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(given))
+                        post("/api/trips")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(given))
                 .andExpect(status().isOk())
                 .andExpect(content().json(given))
                 .andExpect(jsonPath("$.id", notNullValue()))
@@ -170,6 +177,44 @@ class TripsControllerTest {
     void deleteById_Throws404WhenIdNotRegistered() throws Exception {
         mvc.perform(delete("/api/trips/NONEREGISTEREDID"))
                 .andExpect(status().isNotFound());
+    }
+
+    @Test
+    void getShortestPath_Throws404WhenIdNotRegistered() throws Exception {
+        mvc.perform(get("/api/trips/NONEREGISTEREDID/shortest-path"))
+                .andExpect(status().isNotFound());
+    }
+
+    @Test
+    void getShortestPath_returnSortedLocationsWhenFindShortestPathById() throws Exception {
+        Trip trip = new Trip("abc1", "My Trip", new ArrayList<>(List.of(
+                new Location("xyz1", "Kölner Dom", 50.941386546092225, 6.958270670147375),
+                new Location("xyz2", "Planten un Blomen", 53.5625456617408, 9.98188182570993)
+        )));
+        this.tripRepo.save(trip);
+
+        when(client.getMatrixResponse(trip)).thenReturn(new MatrixServiceResponse(
+                List.of(
+                        List.of(50.0, 100.0),
+                        List.of(100.0, 50.0)
+                )));
+
+        String expected = """
+                        [{
+                           "id": "xyz1",
+                           "name": "Kölner Dom",
+                           "latitude": 50.941386546092225,
+                           "longitude": 6.958270670147375
+                         },{
+                            "id": "xyz2",
+                            "name": "Planten un Blomen",
+                            "latitude": 53.5625456617408,
+                            "longitude": 9.98188182570993
+                        }]
+                """;
+        mvc.perform(get("/api/trips/abc1/shortest-path"))
+                .andExpect(status().isOk())
+                .andExpect(content().json(expected));
     }
 
     @Test

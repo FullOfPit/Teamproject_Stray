@@ -16,7 +16,7 @@ public class Trip {
     private String id;
 
     private String title;
-    private List<Location> locations;
+    private List<Location> locations = new ArrayList<>();
 
     public List<String> getLocationNames(){
         List<String> locationNames = new ArrayList<>();

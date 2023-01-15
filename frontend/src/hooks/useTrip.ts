@@ -42,5 +42,9 @@ export default function useTrip(id: string) {
         setTrip(updatedTrip);
     }
 
-    return {trip, notFound, updateTripQuery, deleteTripQuery, removeLocationFromTrip};
+    const setLocationsOnTrip = (locations: Location[]) => {
+        setTrip({...trip, locations});
+    }
+
+    return {trip, notFound, updateTripQuery, deleteTripQuery, removeLocationFromTrip, setLocationsOnTrip};
 }

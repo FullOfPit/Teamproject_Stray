@@ -1,0 +1,10 @@
+.location-list {
+    list-style: none;
+    padding: 0;
+}
+
+.location-list-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}

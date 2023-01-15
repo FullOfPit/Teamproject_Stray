@@ -1,0 +1,8 @@
+.detail-page-header {
+    text-align: center;
+}
+
+.detail-page-actions {
+    display: flex;
+    justify-content: space-between;
+}

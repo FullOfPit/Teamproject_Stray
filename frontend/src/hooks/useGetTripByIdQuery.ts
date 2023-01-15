@@ -25,7 +25,21 @@ export default function useGetTripByIdQuery(id: string) {
                 }
             }
         })();
-    }, []);
+    }, [id]);
 
-    return {trip, notFound};
+    const updateTripQuery = async (trip: Trip) => {
+        const updatedTrip = await Api.updateTrip(trip);
+        setTrip(updatedTrip);
+    }
+
+    const deleteTripQuery = async (id: string) => {
+        await Api.deleteTrip(id);
+    };
+
+    const removeLocationFromTrip = (locationId: string) => {
+        const updatedTrip = {...trip, locations: trip.locations.filter(location => location.id !== locationId)}
+        setTrip(updatedTrip);
+    }
+
+    return {trip, notFound, updateTripQuery, deleteTripQuery, removeLocationFromTrip};
 }

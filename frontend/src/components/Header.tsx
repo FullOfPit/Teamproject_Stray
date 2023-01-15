@@ -22,6 +22,17 @@ export default function Header() {
                     </button>
                 </div>
             </div>
+            {menuSideBarState &&
+                <div className={"side-menu"}>
+                    <div>
+                        <div className={"side-menu-menu"}><h4>Menu</h4></div>
+                        <div className={"side-menu-option"}><h4>Create New Trip</h4></div>
+                        <div className={"side-menu-option"}><h4>Future Features</h4></div>
+                        <div className={"side-menu-settings"}><h4>Settings</h4></div>
+                    </div>
+                </div>
+            }
+
         </header>
     )
 }

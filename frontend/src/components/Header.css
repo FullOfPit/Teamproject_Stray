@@ -49,3 +49,37 @@
     width: 100%;
     height: 100%;
 }
+
+.side-menu {
+    z-index: 20;
+    position: fixed;
+    width: 65%;
+    height: 100%;
+    border-left: 1px solid black;
+    right: 0px;
+    top: 0px;
+    background-color: white;
+
+    text-align: center;
+}
+
+.side-menu-menu {
+    padding: 25% 0 25% 0;
+    font-size: 2rem;
+}
+
+.side-menu-option {
+    font-size: 1.5rem;
+    padding-bottom: 10%;
+}
+
+.side-menu-settings {
+    position: absolute;
+    height: 15%;
+    width: 100%;
+    bottom: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+

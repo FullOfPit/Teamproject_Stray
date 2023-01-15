@@ -14,9 +14,6 @@ export default function DashboardPage() {
     return (
         <>
             <h1>DashboardPage</h1>
-            <Link to="/trips/63c3e23cbbdcc97132521ba0">Kultour</Link>
-            <Link to="/trips/63c4158cbbdcc97132521ba4">Pubcrawl</Link>
-            <Link to="/trips/63c3f83dbbdcc97132521ba1">Sauftour</Link>
         </>
     );
 }

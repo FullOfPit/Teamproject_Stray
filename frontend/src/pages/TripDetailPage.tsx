@@ -43,7 +43,6 @@ export default function TripDetailPage() {
                 </div>
             </header>
             <main>
-                <Link to="/">Back</Link>
                 {trip.locations.length > 0
                     ? <>
                         <LocationMap/>

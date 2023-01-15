@@ -22,10 +22,36 @@ body {
   max-width: 1024px;
 }
 
+/* CONTAINER TO CENTER A MESSAGE (almost) */
 .message-container {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   min-height: 100vmin;
+}
+
+/* STICKY AND FIXED ELEMENTS */
+.sticky {
+  position: sticky;
+}
+
+.fixed {
+  position: fixed;
+}
+
+.sticky,
+.fixed {
+  width: 100%;
+  background-color: var(--bg-color-sticky, white);
+}
+
+.fixed-top,
+.sticky-top {
+  top: 0;
+}
+
+.fixed-bottom,
+.sticky-bottom {
+  bottom: 0;
 }

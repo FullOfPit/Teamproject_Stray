@@ -2,7 +2,6 @@ import {useEffect, useState} from "react";
 import Trip from "../types/Trip";
 import Api from "../api/Api";
 import {isAxiosError} from "axios";
-import useGetShortestPathForTripQuery from "./useGetShortestPathForTripQuery";
 import Location from "../types/Location";
 
 const initialState: Trip = {
@@ -15,14 +14,12 @@ const initialState: Trip = {
 export default function useTrip(id: string) {
     const [trip, setTrip] = useState<Trip>(initialState);
     const [notFound, setNotFound] = useState<boolean>();
-    const {setShortestPath} = useGetShortestPathForTripQuery(trip.locations);
 
     useEffect(() => {
         (async() => {
             try {
                 const trip = await Api.getTrip(id);
                 setTrip(trip);
-                setShortestPath(trip.locations);
             } catch (e) {
                 if (isAxiosError(e) && e.response?.status === 404) {
                     setNotFound(true);

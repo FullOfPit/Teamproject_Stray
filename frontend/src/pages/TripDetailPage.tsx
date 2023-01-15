@@ -1,5 +1,5 @@
 import "./TripDetailPage.css";
-import {Link, useNavigate, useParams} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 import useTrip from "../hooks/useTrip";
 import LocationMap from "../components/LocationMap";
 import AddLocationForm from "../components/AddLocationForm";
@@ -17,12 +17,9 @@ export default function TripDetailPage() {
 
     const {id} = useParams<keyof TripDetailParams>() as TripDetailParams;
     const {trip, notFound, updateTripQuery, deleteTripQuery, removeLocationFromTrip} = useTrip(id);
-    const {shortestPath, getShortestPathForTripQuery} = useGetShortestPathForTripQuery(trip.locations);
+    const {shortestPath, getShortestPathForTripQuery} = useGetShortestPathForTripQuery();
 
-    console.log("render detail page");
-    // title is input field ("border:none") -> can be edited (click on "save" necessary to save changes)
-    // show map with location markers
-    // AddLocationForm -> if location is added -> add to trip (click on "save" necessary to save changes)
+    // @ToDo title is input field ("border:none") -> can be edited (click on "save" necessary to save changes)
 
     if (notFound) {
         return <Error message="Trip not found." link={{text: "Show all trips", to: "/"}}/>
@@ -45,8 +42,9 @@ export default function TripDetailPage() {
             <main>
                 {trip.locations.length > 0
                     ? <>
+                        {/* @ToDo pass locations to map */}
                         <LocationMap/>
-                        <LocationList locations={trip.locations} onLocationDelete={removeLocationFromTrip}/>
+                        <LocationList locations={shortestPath.length !== 0 ? shortestPath : trip.locations} onLocationDelete={removeLocationFromTrip}/>
                         <button onClick={() => getShortestPathForTripQuery(trip)}>Stray!</button>
                     </>
                     : <div className="message-container">

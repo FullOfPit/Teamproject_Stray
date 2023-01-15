@@ -1,18 +1,17 @@
 package com.example.backend.client;
 
+import com.example.backend.exception.ClientResponseException;
 import com.example.backend.model.MatrixServiceResponse;
 import com.example.backend.model.Trip;
 import okhttp3.mockwebserver.MockResponse;
 import okhttp3.mockwebserver.MockWebServer;
 import okhttp3.mockwebserver.RecordedRequest;
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
+import org.springframework.http.*;
 import org.springframework.web.reactive.function.client.WebClient;
 
 import java.io.IOException;
@@ -88,5 +87,29 @@ class OpenServiceApiClientTest {
         assertEquals(MediaType.APPLICATION_JSON_VALUE, recordedRequest.getHeader(HttpHeaders.CONTENT_TYPE));
         assertEquals(expectedApiKey, recordedRequest.getHeader(HttpHeaders.AUTHORIZATION));
     }
+
+    @Test
+    void getMatrixResponse_Handle4xx() {
+        // given
+        String expectedApiKey = "some-key";
+
+        MockResponse mockResponse = new MockResponse()
+                .addHeader("Content-Type", "application/json; charset=utf-8")
+                .setResponseCode(HttpStatus.UNAUTHORIZED.value());
+
+        this.mockWebServer.enqueue(mockResponse);
+
+        Trip trip = new Trip();
+
+        OpenServiceApiClient sut = new OpenServiceApiClient(
+                WebClient.builder(),
+                this.mockWebServer.url("/").toString(),
+                expectedApiKey
+        );
+
+        Assertions.assertThrows(ClientResponseException.class, () -> sut.getMatrixResponse(trip));
+
+    }
+
 
 }

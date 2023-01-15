@@ -6,17 +6,18 @@ import DashboardPage from './pages/DashboardPage';
 import LoginPage from "./pages/LoginPage";
 import TripDetailPage from "./pages/TripDetailPage";
 import TripFormPage from "./pages/TripFormPage";
+import SettingsPage from "./pages/SettingsPage";
 
 function App() {
     return (
         <>
-            <Header/>
             <main className="page-content container">
               <Routes>
                 <Route path="/" element={<DashboardPage />} />
                 <Route path="/login" element={<LoginPage />} />
                 <Route path="/trips/:id" element={<TripDetailPage />} />
                 <Route path="/trips/create" element={<TripFormPage />} />
+                <Route path="/settings" element={<SettingsPage/>} />
               </Routes>
             </main>
         </>

@@ -4,14 +4,14 @@ import Location from "../types/Location";
 
 export default function LocationList({locations, onLocationDelete}: {
     locations: Location[],
-    onLocationDelete: (locationId: string) => void;
+    onLocationDelete: (location: Location) => void;
 }) {
     return (
         <ul className="location-list">
             {locations.map(location => (
                 <li key={location.id} className="location-list-item">
                     <p>{location.name}</p>
-                    <BsFillTrashFill onClick={() => onLocationDelete(location.id)}/>
+                    <BsFillTrashFill onClick={() => onLocationDelete(location)}/>
                 </li>
             ))}
         </ul>

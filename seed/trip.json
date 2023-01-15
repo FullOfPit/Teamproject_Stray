@@ -1,0 +1,151 @@
+[{
+  "_id": {
+    "$oid": "63c41d7c4b11065dcff247f0"
+  },
+  "tripTimeStamp": {
+    "$date": {
+      "$numberLong": "1673796988834"
+    }
+  },
+  "title": "Trip ohne Locations",
+  "locations": [],
+  "_class": "com.example.backend.model.Trip"
+},{
+  "_id": {
+    "$oid": "63c41d5f4b11065dcff247ef"
+  },
+  "tripTimeStamp": {
+    "$date": {
+      "$numberLong": "1673796959467"
+    }
+  },
+  "title": "Sightseeing Hamburg",
+  "locations": [
+    {
+      "_id": {
+        "$oid": "63c41d5f4b11065dcff247e7"
+      },
+      "name": "Speicherstadt",
+      "latitude": 53.5462450391128,
+      "longitude": 10.002170963903314
+    },
+    {
+      "_id": {
+        "$oid": "63c41d5f4b11065dcff247e8"
+      },
+      "name": "Alter Elbtunnel",
+      "latitude": 53.54596895295109,
+      "longitude": 9.966619985583302
+    },
+    {
+      "_id": {
+        "$oid": "63c41d5f4b11065dcff247e9"
+      },
+      "name": "Planten un Blomen",
+      "latitude": 53.56236581655875,
+      "longitude": 9.981712705534376
+    },
+    {
+      "_id": {
+        "$oid": "63c41d5f4b11065dcff247ea"
+      },
+      "name": "Rathaus",
+      "latitude": 53.55054591479016,
+      "longitude": 9.99232277023963
+    },
+    {
+      "_id": {
+        "$oid": "63c41d5f4b11065dcff247eb"
+      },
+      "name": "CHOCOVERSUM",
+      "latitude": 53.548048970638284,
+      "longitude": 10.00249175489589
+    },
+    {
+      "_id": {
+        "$oid": "63c41d5f4b11065dcff247ec"
+      },
+      "name": "Elbphilharmonie",
+      "latitude": 53.54150721272578,
+      "longitude": 9.983165043255022
+    },
+    {
+      "_id": {
+        "$oid": "63c41d5f4b11065dcff247ed"
+      },
+      "name": "St. Pauli Landungsbrücken",
+      "latitude": 53.54545205366996,
+      "longitude": 9.966065814419064
+    },
+    {
+      "_id": {
+        "$oid": "63c41d5f4b11065dcff247ee"
+      },
+      "name": "Rote Flora",
+      "latitude": 53.56208826685532,
+      "longitude": 9.96150432218414
+    }
+  ],
+  "_class": "com.example.backend.model.Trip"
+},{
+  "_id": {
+    "$oid": "63c41b464b11065dcff247e6"
+  },
+  "tripTimeStamp": {
+    "$date": {
+      "$numberLong": "1673797921554"
+    }
+  },
+  "title": "Kneipentour",
+  "locations": [
+    {
+      "_id": {
+        "$oid": "63c41b464b11065dcff247e0"
+      },
+      "name": "Laika",
+      "latitude": 52.46944934781305,
+      "longitude": 13.437999741380851
+    },
+    {
+      "_id": {
+        "$oid": "63c41b464b11065dcff247e3"
+      },
+      "name": "Tristeza",
+      "latitude": 52.48668504558828,
+      "longitude": 13.430992443232686
+    },
+    {
+      "_id": {
+        "$oid": "63c41b464b11065dcff247e1"
+      },
+      "name": "Zum Umsteiger",
+      "latitude": 52.46807309268305,
+      "longitude": 13.431294814396427
+    },
+    {
+      "_id": {
+        "$oid": "63c41b464b11065dcff247e5"
+      },
+      "name": "OYA",
+      "latitude": 52.50104673275016,
+      "longitude": 13.423230048413222
+    },
+    {
+      "_id": {
+        "$oid": "63c41b464b11065dcff247e4"
+      },
+      "name": "Villa Neukölln",
+      "latitude": 52.48222386801419,
+      "longitude": 13.425091320027116
+    },
+    {
+      "_id": {
+        "$oid": "63c41b464b11065dcff247e2"
+      },
+      "name": "Frollein Langner",
+      "latitude": 52.47403190729282,
+      "longitude": 13.425218299052819
+    }
+  ],
+  "_class": "com.example.backend.model.Trip"
+}]

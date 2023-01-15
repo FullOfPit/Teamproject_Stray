@@ -6,7 +6,6 @@ import AddLocationForm from "../components/AddLocationForm";
 import Error from "../components/Error";
 import LocationList from "../components/LocationList";
 import Trip from "../types/Trip";
-import Api from "../api/Api";
 
 type TripDetailParams = {
     id: string,
@@ -19,15 +18,10 @@ export default function TripDetailPage() {
     const navigate = useNavigate();
 
     const {id} = useParams<keyof TripDetailParams>() as TripDetailParams;
-    const {trip, notFound, updateTripQuery, deleteTripQuery, removeLocationFromTrip, setLocationsOnTrip} = useTrip(id);
+    const {trip, notFound, updateTripQuery, deleteTripQuery, removeLocationFromTrip, getShortestPathForTripQuery} = useTrip(id);
 
     if (notFound) {
         return <Error message="Trip not found." link={{text: "Show all trips", to: "/"}}/>
-    }
-
-    const getShortestPathForTripQuery = async (trip: Trip) => {
-        const shortestPath = await Api.getShortestPathForTrip(trip.id);
-        setLocationsOnTrip(shortestPath);
     }
 
     const onDelete = async (trip: Trip) => {

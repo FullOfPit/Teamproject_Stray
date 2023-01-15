@@ -37,14 +37,15 @@ export default function useTrip(id: string) {
         await Api.deleteTrip(trip.id);
     };
 
+    const getShortestPathForTripQuery = async (trip: Trip) => {
+        const shortestPath = await Api.getShortestPathForTrip(trip.id);
+        setTrip({...trip, locations: shortestPath});
+    }
+
     const removeLocationFromTrip = (deletedLocation: Location) => {
         const updatedTrip = {...trip, locations: trip.locations.filter(location => location.id !== deletedLocation.id)}
         setTrip(updatedTrip);
     }
 
-    const setLocationsOnTrip = (locations: Location[]) => {
-        setTrip({...trip, locations});
-    }
-
-    return {trip, notFound, updateTripQuery, deleteTripQuery, removeLocationFromTrip, setLocationsOnTrip};
+    return {trip, notFound, updateTripQuery, deleteTripQuery, getShortestPathForTripQuery, removeLocationFromTrip};
 }

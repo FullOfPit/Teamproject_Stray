@@ -1,14 +1,37 @@
 
 .settings-main {
     width: 100%;
-
 }
-.header-container {
-    position: sticky;
-    top: 0;
-
+.settings-user-photo {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin: 10% 0% 20% 5%;
 }
+
+.settings-user-photo img {
+    margin-right: 15%;
+    height: 125px;
+    width: 125px;
+
+    border: 1px solid black;
+    border-radius: 35%;
+}
+
 .settings-content {
-    z-index: 1;
-    overflow-y: scroll;
+    display: flex;
+    flex-direction: column;
+    padding-left: 15%;
 }
+
+.settings-user-name {
+    display: inline-flex;
+    padding-bottom: 2rem;
+}
+
+.settings-redirect {
+    padding-top: 50%;
+    padding-left: 15%;
+}
+
+

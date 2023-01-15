@@ -5,18 +5,19 @@
 }
 
 .header-bar {
-    height: 70px;
     z-index: 10;
-    background-color: white;
+    height: 70px;
     width: 100%;
+
     border-bottom: 1px solid black;
+    background-color: white;
 }
 
 .header-bar-container {
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
     align-items: center;
+    justify-content: space-between;
     height: 100%;
     width: 100%;
     padding-right: 15px;
@@ -36,8 +37,8 @@
     height: 50px;
     width: 50px;
     border: 1px solid gray;
-    box-shadow: dimgray;
     border-radius: 40%;
+    box-shadow: dimgray;
 }
 
 .menu-button-container {
@@ -46,21 +47,27 @@
 }
 
 .menu-button-container button {
-    width: 100%;
     height: 100%;
+    width: 100%;
 }
 
 .side-menu {
-    z-index: 20;
     position: fixed;
-    width: 65%;
-    height: 100%;
-    border-left: 1px solid black;
-    right: 0px;
     top: 0px;
-    background-color: white;
+    right: 0px;
+    z-index: 1;
 
+    height: 100%;
+    width: 65%;
+
+    background-color: white;
+    border-left: 1px solid black;
     text-align: center;
+}
+
+.side-menu-back {
+    position: absolute;
+    top: 4%;
 }
 
 .side-menu-menu {
@@ -69,17 +76,20 @@
 }
 
 .side-menu-option {
-    font-size: 1.5rem;
     padding-bottom: 10%;
+    font-size: 1.5rem;
 }
 
 .side-menu-settings {
     position: absolute;
-    height: 15%;
-    width: 100%;
     bottom: 0;
     display: flex;
-    justify-content: center;
     align-items: center;
+    justify-content: center;
+    height: 15%;
+    width: 100%;
 }
+
+
+
 

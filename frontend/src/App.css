@@ -2,3 +2,7 @@
     margin: 0;
     padding: 0;
 }
+.header-container {
+    position: sticky;
+    top: 0;
+}

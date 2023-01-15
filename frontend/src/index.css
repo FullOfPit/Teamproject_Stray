@@ -6,7 +6,7 @@
 
 html, body {
   margin: 0;
-  padding: 0
+  padding: 0;
 }
 
 body {
@@ -20,4 +20,12 @@ body {
 .container {
   margin: 0 auto;
   max-width: 1024px;
+}
+
+.message-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vmin;
 }

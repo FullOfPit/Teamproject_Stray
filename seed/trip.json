@@ -1,63 +1,14 @@
 [{
   "_id": {
-    "$oid": "63c41b464b11065dcff247e6"
+    "$oid": "63c41d7c4b11065dcff247f0"
   },
   "tripTimeStamp": {
     "$date": {
-      "$numberLong": "1673796422555"
+      "$numberLong": "1673796988834"
     }
   },
-  "title": "Kneipentour",
-  "locations": [
-    {
-      "_id": {
-        "$oid": "63c41b464b11065dcff247e0"
-      },
-      "name": "Laika",
-      "latitude": 52.46944934781305,
-      "longitude": 13.437999741380851
-    },
-    {
-      "_id": {
-        "$oid": "63c41b464b11065dcff247e1"
-      },
-      "name": "Zum Umsteiger",
-      "latitude": 52.46807309268305,
-      "longitude": 13.431294814396427
-    },
-    {
-      "_id": {
-        "$oid": "63c41b464b11065dcff247e2"
-      },
-      "name": "Frollein Langner",
-      "latitude": 52.47403190729282,
-      "longitude": 13.425218299052819
-    },
-    {
-      "_id": {
-        "$oid": "63c41b464b11065dcff247e3"
-      },
-      "name": "Tristeza",
-      "latitude": 52.48668504558828,
-      "longitude": 13.430992443232686
-    },
-    {
-      "_id": {
-        "$oid": "63c41b464b11065dcff247e4"
-      },
-      "name": "Villa Neukölln",
-      "latitude": 52.48222386801419,
-      "longitude": 13.425091320027116
-    },
-    {
-      "_id": {
-        "$oid": "63c41b464b11065dcff247e5"
-      },
-      "name": "OYA",
-      "latitude": 52.50104673275016,
-      "longitude": 13.423230048413222
-    }
-  ],
+  "title": "Trip ohne Locations",
+  "locations": [],
   "_class": "com.example.backend.model.Trip"
 },{
   "_id": {
@@ -138,14 +89,63 @@
   "_class": "com.example.backend.model.Trip"
 },{
   "_id": {
-    "$oid": "63c41d7c4b11065dcff247f0"
+    "$oid": "63c41b464b11065dcff247e6"
   },
   "tripTimeStamp": {
     "$date": {
-      "$numberLong": "1673796988834"
+      "$numberLong": "1673797921554"
     }
   },
-  "title": "Trip ohne Locations",
-  "locations": [],
+  "title": "Kneipentour",
+  "locations": [
+    {
+      "_id": {
+        "$oid": "63c41b464b11065dcff247e0"
+      },
+      "name": "Laika",
+      "latitude": 52.46944934781305,
+      "longitude": 13.437999741380851
+    },
+    {
+      "_id": {
+        "$oid": "63c41b464b11065dcff247e3"
+      },
+      "name": "Tristeza",
+      "latitude": 52.48668504558828,
+      "longitude": 13.430992443232686
+    },
+    {
+      "_id": {
+        "$oid": "63c41b464b11065dcff247e1"
+      },
+      "name": "Zum Umsteiger",
+      "latitude": 52.46807309268305,
+      "longitude": 13.431294814396427
+    },
+    {
+      "_id": {
+        "$oid": "63c41b464b11065dcff247e5"
+      },
+      "name": "OYA",
+      "latitude": 52.50104673275016,
+      "longitude": 13.423230048413222
+    },
+    {
+      "_id": {
+        "$oid": "63c41b464b11065dcff247e4"
+      },
+      "name": "Villa Neukölln",
+      "latitude": 52.48222386801419,
+      "longitude": 13.425091320027116
+    },
+    {
+      "_id": {
+        "$oid": "63c41b464b11065dcff247e2"
+      },
+      "name": "Frollein Langner",
+      "latitude": 52.47403190729282,
+      "longitude": 13.425218299052819
+    }
+  ],
   "_class": "com.example.backend.model.Trip"
 }]

@@ -9,6 +9,9 @@ import TripFormPage from "./pages/TripFormPage";
 import SettingsPage from "./pages/SettingsPage";
 
 function App() {
+
+    //const navigate = useNavigate(); ?
+
     return (
         <>
             <main className="page-content container">

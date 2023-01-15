@@ -1,16 +1,14 @@
 package com.example.backend.client;
 
-import com.example.backend.exception.ClientResponseException;
 import com.example.backend.model.MatrixServiceRequest;
 import com.example.backend.model.MatrixServiceResponse;
 import com.example.backend.model.Trip;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
-import reactor.core.publisher.Mono;
+
 
 @Component
 public class OpenServiceApiClient {
@@ -36,9 +34,6 @@ public class OpenServiceApiClient {
                 .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                 .bodyValue(matrixServiceRequest)
                 .retrieve()
-                .onStatus(HttpStatusCode::is4xxClientError, clientResponse ->
-                    Mono.error(new ClientResponseException().getCause())
-                )
                 .toEntity(MatrixServiceResponse.class)
                 .block()
                 .getBody();

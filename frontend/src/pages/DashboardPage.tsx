@@ -1,19 +1,23 @@
 import "./DashboardPage.css";
-import {Link} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
+import Accordion from "../components/Accordion";
+import useGetTripsQuery from "../hooks/useGetTripsQuery";
 
 export default function DashboardPage() {
     // if not logged in, then navigate.to LoginPage?
 
-    // get all trips from API
-    // if no trips yet, navigate.to TripFormPage?
+    const navigate = useNavigate();
+    const {trips} = useGetTripsQuery();
 
-    // show all trips in list of accordions
-    // on click go to Detail page
-    // on "open accordion" -> show map
+    if (trips.length === 0) {
+        navigate("/trips/create");
+    }
 
     return (
-        <>
-            <h1>DashboardPage</h1>
-        </>
+        <div className="dashboard-container">
+            <h1>Planned Trips</h1>
+
+            <Accordion trips={trips}/>
+        </div>
     );
 }

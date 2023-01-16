@@ -84,7 +84,7 @@ class OpenServiceApiClientTest {
         RecordedRequest recordedRequest = this.mockWebServer.takeRequest();
 
         assertEquals(HttpMethod.POST.name(), recordedRequest.getMethod());
-        assertEquals("/foot-walking", recordedRequest.getPath());
+        assertEquals("/matrix/foot-walking", recordedRequest.getPath());
         assertEquals(MediaType.APPLICATION_JSON_VALUE, recordedRequest.getHeader(HttpHeaders.CONTENT_TYPE));
         assertEquals(expectedApiKey, recordedRequest.getHeader(HttpHeaders.AUTHORIZATION));
     }

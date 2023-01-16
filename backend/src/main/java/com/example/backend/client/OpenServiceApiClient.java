@@ -29,7 +29,7 @@ public class OpenServiceApiClient {
 
         return this.client
                 .post()
-                .uri("/foot-walking")
+                .uri("/matrix/foot-walking")
                 .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                 .bodyValue(matrixServiceRequest)
                 .retrieve()

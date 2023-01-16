@@ -2,7 +2,7 @@ import "./LocationMap.css";
 import Location from "../types/Location";
 
 export default function LocationMap({locations}: {
-    locations: Location[],
+    locations: Location[]
 }) {
     // this component should be the wrapper for the MapContainer of react-leaflet
 

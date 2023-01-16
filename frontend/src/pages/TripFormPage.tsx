@@ -14,7 +14,7 @@ export default function TripFormPage() {
     const [trip, setTrip] = useState<Trip>({title: "", tripTimestamp: "", locations: []});
     const navigate =useNavigate();
 
-    const onClick = (() => {
+    const onSave = (() => {
         (async () => {
             const response:Trip = await Api.postTrip(trip);
             setTrips([...trips,response]);
@@ -29,17 +29,28 @@ export default function TripFormPage() {
 
     return (
         <>
-            <h3>Create a trip</h3>
+            <header>
+                <h3>Create a trip</h3>
+            </header>
 
-            <button onClick={onClick}>Save</button>
+            <main>
+                <button onClick={trip.title && trip.locations
+                    ? onSave
+                    : () => alert("Do not have trip title or trip locations")
+                }>Save</button>
 
-            <input placeholder={"Trip name ..."}
-                   onChange={e => setTrip({...trip,title: e.target.value})}
-            />
+                <input placeholder={"Trip title ..."}
+                       onChange={e => setTrip({...trip,title: e.target.value})}
+                />
 
-            <LocationMap locations={locations}/>
+                <LocationMap locations={locations}/>
+            </main>
 
-            <AddLocationForm onAdd={onAdd}/>
+            <footer className={"trip-form-page-footer"}>
+                <div className={"fixed fixed-bottom"}>
+                    <AddLocationForm onAdd={onAdd}/>
+                </div>
+            </footer>
         </>
     );
 }

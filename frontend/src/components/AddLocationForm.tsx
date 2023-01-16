@@ -5,6 +5,8 @@ export default function AddLocationForm({onAdd}:{onAdd: (location:Location) => v
     // show input for search term
     // request openstreetmap API for terms
     // display FindLocationOverlay with searchresults
+
+    //dummy location to test trip form page-axios post
     const location: Location=  {
         name:"somewhere",
         latitude:10.,

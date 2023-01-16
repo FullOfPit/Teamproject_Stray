@@ -41,8 +41,7 @@ export default function TripDetailPage() {
             <main>
                 {trip.locations.length > 0
                     ? <>
-                        {/* @ToDo pass locations to map */}
-                        <LocationMap/>
+                        <LocationMap locations={trip.locations}/>
                         <LocationList locations={trip.locations} onLocationDelete={removeLocationFromTrip}/>
                         <button onClick={() => getShortestPathForTripQuery(trip)}>Stray!</button>
                     </>
@@ -51,8 +50,10 @@ export default function TripDetailPage() {
                     </div>
                 }
             </main>
-            <footer>
-                <AddLocationForm/>
+            <footer className="detail-page-footer">
+                <div className="fixed fixed-bottom">
+                    <AddLocationForm/>
+                </div>
             </footer>
         </>
     )

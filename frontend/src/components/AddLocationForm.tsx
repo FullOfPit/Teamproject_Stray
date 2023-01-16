@@ -6,8 +6,8 @@ export default function AddLocationForm() {
     // display FindLocationOverlay with searchresults
 
     return (
-      <div className="fixed fixed-bottom">
-          <p>I am the form for adding locations</p>
-      </div>
+        <>
+            <p>I am the form for adding locations</p>
+        </>
     );
 }

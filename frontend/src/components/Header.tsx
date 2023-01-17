@@ -19,7 +19,7 @@ export default function Header() {
             <div className="header-bar-container">
                 <div className={"user-image-and-name-container"}>
                     <div className={"user-image-container"}>
-                        <img className={"user-image"} src={LogoSmall} alt={"Error"}/>
+                        <Link to={"/"}><img className={"user-image"} src={LogoSmall} alt={"Error"}/></Link>
                     </div>
                     <h4> Name - Go stray! </h4>
                 </div>

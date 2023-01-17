@@ -3,6 +3,7 @@
     top: var(--app-header-height, 70px);
     text-align: center;
     background-color: var(--bg-color-sticky, white);
+    z-index: 10;
 }
 
 .detail-page-actions {

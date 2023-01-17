@@ -1,6 +1,5 @@
 
 .header-bar {
-    z-index: 10;
     height: var(--app-header-height, 70px);
     width: 100%;
 

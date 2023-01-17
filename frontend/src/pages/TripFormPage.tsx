@@ -9,15 +9,13 @@ import Location from "../types/Location";
 
 export default function TripFormPage() {
 
-    const [trips, setTrips] = useState<Trip[]>([]);
     const [locations, setLocations] = useState<Location[]>([]);
     const [trip, setTrip] = useState<Trip>({title: "", tripTimestamp: "", locations: []});
     const navigate =useNavigate();
 
     const onSave = (() => {
         (async () => {
-            const response:Trip = await Api.postTrip(trip);
-            setTrips([...trips,response]);
+            await Api.postTrip(trip);
             navigate("/");
         })();
     });
@@ -36,7 +34,7 @@ export default function TripFormPage() {
             <main>
                 <button onClick={trip.title && trip.locations
                     ? onSave
-                    : () => alert("Do not have trip title or trip locations")
+                    : () => alert("You do not have a trip title or trip locations set")
                 }>Save</button>
 
                 <input placeholder={"Trip title ..."}

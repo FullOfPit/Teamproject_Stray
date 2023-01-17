@@ -8,9 +8,9 @@ export default function AddLocationForm({onAdd}:{onAdd: (location:Location) => v
 
     //dummy location to test trip form page-axios post
     const location: Location=  {
-        name:"somewhere",
-        latitude:10.,
-        longitude:20.
+        "name": "Kölner Dom",
+        "latitude": 50.941386546092225,
+        "longitude": 6.958270670147375
     };
 
     return (

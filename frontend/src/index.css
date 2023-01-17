@@ -23,7 +23,7 @@ body {
 }
 
 /* CONTAINER TO CENTER A MESSAGE (almost) */
-.message-container {
+.error-message-container {
   display: flex;
   flex-direction: column;
   justify-content: center;

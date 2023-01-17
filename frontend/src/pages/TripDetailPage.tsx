@@ -45,7 +45,7 @@ export default function TripDetailPage() {
                         <LocationList locations={trip.locations} onLocationDelete={removeLocationFromTrip}/>
                         <button onClick={() => getShortestPathForTripQuery(trip)}>Stray!</button>
                     </>
-                    : <div className="message-container">
+                    : <div className="error-message-container">
                         <p>You haven't added any locations yet</p>
                     </div>
                 }

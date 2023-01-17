@@ -8,7 +8,7 @@ export default function Error({message, link}: {
     }
 }) {
     return (
-      <div className="message-container">
+      <div className="error-message-container">
           <p>{message}</p>
           {link &&
             <Link to={link.to}>{link.text}</Link>

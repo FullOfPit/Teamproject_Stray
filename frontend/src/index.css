@@ -4,6 +4,11 @@
   box-sizing: border-box;
 }
 
+:root {
+  --app-header-height: 70px;
+  --bg-color-sticky: white;
+}
+
 html, body {
   margin: 0;
   padding: 0;
@@ -31,27 +36,3 @@ body {
   min-height: 100vmin;
 }
 
-/* STICKY AND FIXED ELEMENTS */
-.sticky {
-  position: sticky;
-}
-
-.fixed {
-  position: fixed;
-}
-
-.sticky,
-.fixed {
-  width: 100%;
-  background-color: var(--bg-color-sticky, white);
-}
-
-.fixed-top,
-.sticky-top {
-  top: 0;
-}
-
-.fixed-bottom,
-.sticky-bottom {
-  bottom: 0;
-}

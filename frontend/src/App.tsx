@@ -13,20 +13,21 @@ function App() {
     //const navigate = useNavigate(); ?
 
     return (
-        <>
+        <body>
+            <div className={"header-container"}>
+                <Header/>
+            </div>
             <main className="page-content container">
-                <div className={"header-container"}>
-                    <Header/>
-                </div>
-              <Routes>
-                <Route path="/" element={<DashboardPage />} />
-                <Route path="/login" element={<LoginPage />} />
-                <Route path="/trips/:id" element={<TripDetailPage />} />
-                <Route path="/trips/create" element={<TripFormPage />} />
-                <Route path="/settings" element={<SettingsPage/>} />
-              </Routes>
+                <Routes>
+                    <Route path="/" element={<DashboardPage />} />
+                    <Route path="/login" element={<LoginPage />} />
+                    <Route path="/trips/:id" element={<TripDetailPage />} />
+                    <Route path="/trips/create" element={<TripFormPage />} />
+                    <Route path="/settings" element={<SettingsPage/>} />
+                </Routes>
             </main>
-        </>
+
+        </body>
     );
 }
 

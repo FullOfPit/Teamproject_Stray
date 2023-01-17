@@ -1,10 +1,8 @@
 import "./SettingsPage.css"
 import LogoSmall from "../Stray-Logo-Small.jpeg";
-import {useNavigate} from "react-router-dom";
+import {Link} from "react-router-dom";
 
 export default function SettingsPage() {
-
-    const navigate = useNavigate();
 
     return (
 
@@ -24,7 +22,7 @@ export default function SettingsPage() {
             </div>
 
             <div className={"settings-redirect"}>
-                <h4 onClick={() => navigate("/", {replace:true})}>Stray back to the dashboard</h4>
+                <h4><Link to={"/"}>Stray back to the dashboard</Link></h4>
             </div>
         </div>
     );

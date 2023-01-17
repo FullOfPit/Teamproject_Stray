@@ -1,8 +1,8 @@
 import "./Header.css";
 import LogoSmall from "../Stray-Logo-Small.jpeg";
-import {BsList, BsFillSkipStartFill} from 'react-icons/bs';
+import {BsList, BsFillSkipEndFill} from 'react-icons/bs';
 import {useState} from "react";
-import {useNavigate} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 
 export default function Header() {
 
@@ -32,11 +32,11 @@ export default function Header() {
             {menuSideBarState &&
                 <div className={"side-menu"}>
                     <div>
-                        <div className={"side-menu-back"}> <BsFillSkipStartFill onClick={() => setMenuSideBarState(false)} size={25}/> </div>
+                        <div className={"side-menu-back"}> <BsFillSkipEndFill onClick={() => setMenuSideBarState(false)} size={25}/> </div>
                         <div className={"side-menu-menu"}><h4>Menu</h4></div>
                         <div className={"side-menu-option"}><h4>Create New Trip</h4></div>
                         <div className={"side-menu-option"}><h4>Future Features</h4></div>
-                        <div className={"side-menu-settings"}><h4 onClick={() => redirectToSettings()}>Settings</h4></div>
+                        <div className={"side-menu-settings"}><h4><Link  to={"/settings"} onClick={() => redirectToSettings()}>Settings</Link></h4></div>
                     </div>
                 </div>
             }

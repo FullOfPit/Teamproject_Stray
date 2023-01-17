@@ -9,10 +9,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
+import org.springframework.http.*;
 import org.springframework.web.reactive.function.client.WebClient;
 
 import java.io.IOException;
@@ -88,5 +85,7 @@ class OpenServiceApiClientTest {
         assertEquals(MediaType.APPLICATION_JSON_VALUE, recordedRequest.getHeader(HttpHeaders.CONTENT_TYPE));
         assertEquals(expectedApiKey, recordedRequest.getHeader(HttpHeaders.AUTHORIZATION));
     }
+
+
 
 }

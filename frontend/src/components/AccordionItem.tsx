@@ -21,9 +21,11 @@ export default function AccordionItem({trip, isExpanded, onExpand, onClose}: {
                     : <MdKeyboardArrowDown className="accordion-item-handler" onClick={onExpand}/>
                 }
             </header>
-            <main className="accordion-body" data-expanded={isExpanded}>
-                <LocationMap locations={trip.locations} />
-            </main>
+            {isExpanded &&
+              <main className="accordion-body">
+                <LocationMap locations={trip.locations}/>
+              </main>
+            }
         </div>
     );
 }

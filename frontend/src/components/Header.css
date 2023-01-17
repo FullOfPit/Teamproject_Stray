@@ -1,0 +1,90 @@
+
+.header-bar {
+    z-index: 10;
+    height: 70px;
+    width: 100%;
+
+    border-bottom: 1px solid black;
+    background-color: white;
+}
+
+.header-bar-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    height: 100%;
+    width: 100%;
+    padding-right: 15px;
+}
+
+.user-image-and-name-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+.user-image-container {
+    padding-left: 10px;
+    padding-right: 25px;
+}
+
+.user-image {
+    height: 50px;
+    width: 50px;
+    border: 1px solid gray;
+    border-radius: 50%;
+    box-shadow: dimgray;
+}
+
+.menu-button-container {
+    height: 35px;
+    width: 35px;
+}
+
+.menu-button-container button {
+    height: 100%;
+    width: 100%;
+}
+
+.side-menu {
+    position: fixed;
+    top: 0px;
+    right: 0px;
+    z-index: 1;
+
+    height: 100%;
+    width: 65%;
+
+    background-color: white;
+    border-left: 1px solid black;
+    text-align: center;
+}
+
+.side-menu-back {
+    position: absolute;
+    top: 4%;
+}
+
+.side-menu-menu {
+    padding: 25% 0 25% 0;
+    font-size: 2rem;
+}
+
+.side-menu-option {
+    padding-bottom: 10%;
+    font-size: 1.5rem;
+}
+
+.side-menu-settings {
+    position: absolute;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 15%;
+    width: 100%;
+}
+
+
+
+

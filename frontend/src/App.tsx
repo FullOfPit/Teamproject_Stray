@@ -13,7 +13,7 @@ function App() {
     //const navigate = useNavigate(); ?
 
     return (
-        <body>
+        <>
             <div className={"header-container"}>
                 <Header/>
             </div>
@@ -26,8 +26,8 @@ function App() {
                     <Route path="/settings" element={<SettingsPage/>} />
                 </Routes>
             </main>
+        </>
 
-        </body>
     );
 }
 

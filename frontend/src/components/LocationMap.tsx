@@ -2,6 +2,7 @@ import "./LocationMap.css";
 import Location from "../types/Location";
 import {MapContainer, TileLayer} from "react-leaflet";
 import LocationMarkerGroup from "./LocationMarkerGroup";
+import RoutingMachine from "./RoutingMachine";
 
 export default function LocationMap({locations}: {
     locations: Location[]
@@ -14,6 +15,7 @@ export default function LocationMap({locations}: {
                     url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                 />
                 <LocationMarkerGroup locations={locations}/>
+                <RoutingMachine/>
             </MapContainer>
         </>
     )

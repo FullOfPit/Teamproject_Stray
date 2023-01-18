@@ -15,7 +15,7 @@ export default function TripFormPage() {
 
     const onSave = (() => {
         (async () => {
-            await Api.postTrip(trip);
+            const response = await Api.postTrip(trip);
             navigate("/");
         })();
     });

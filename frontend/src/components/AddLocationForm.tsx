@@ -1,7 +1,11 @@
 import "./AddLocationForm.css";
 import Location from "../types/Location";
 
-export default function AddLocationForm({onAdd}:{onAdd: (location:Location) => void}) {
+export default function AddLocationForm({
+    onAdd
+}:{
+    onAdd: (location:Location) => void}
+){
     // show input for search term
     // request openstreetmap API for terms
     // display FindLocationOverlay with searchresults

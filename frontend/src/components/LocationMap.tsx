@@ -4,7 +4,7 @@ import {MapContainer, TileLayer} from "react-leaflet";
 import LocationMarkerGroup from "./LocationMarkerGroup";
 
 export default function LocationMap({locations}: {
-    locations: Location[],
+    locations: Location[]
 }) {
     return (
         <>

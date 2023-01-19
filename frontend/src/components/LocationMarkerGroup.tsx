@@ -21,7 +21,7 @@ export default function LocationMarkerGroup({locations}: {
         <FeatureGroup ref={markerGroupRef}>
             {locations.map(location => (
                 <Marker
-                    key={location.id}
+                    key={location.id ?? location.name}
                     position={new LatLng(location.latitude, location.longitude)}
                     eventHandlers={{
                         add: showAllMarkersOnMap,

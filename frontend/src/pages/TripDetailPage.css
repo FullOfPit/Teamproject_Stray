@@ -1,0 +1,20 @@
+.detail-page-header {
+    position: sticky;
+    top: var(--app-header-height, 70px);
+    text-align: center;
+    background-color: var(--bg-color-sticky, white);
+    z-index: 10;
+}
+
+.detail-page-actions {
+    display: flex;
+    justify-content: space-between;
+}
+
+.detail-page-footer {
+    position: fixed;
+    bottom: 0;
+    margin-top: 4rem;
+    width: 100%;
+    background-color: var(--bg-color-sticky, white);
+}

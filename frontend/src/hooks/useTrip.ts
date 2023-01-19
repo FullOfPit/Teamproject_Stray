@@ -16,7 +16,7 @@ export default function useTrip(id: string) {
     const [notFound, setNotFound] = useState<boolean>();
 
     useEffect(() => {
-        (async() => {
+        (async () => {
             try {
                 const trip = await Api.getTrip(id);
                 setTrip(trip);
@@ -34,10 +34,18 @@ export default function useTrip(id: string) {
     }
 
     const deleteTripQuery = async (trip: Trip) => {
+        if (!trip.id) {
+            return;
+        }
+        
         await Api.deleteTrip(trip.id);
     };
 
     const getShortestPathForTripQuery = async (trip: Trip) => {
+        if (!trip.id) {
+            return;
+        }
+
         const shortestPath = await Api.getShortestPathForTrip(trip.id);
         setTrip({...trip, locations: shortestPath});
     }
@@ -47,5 +55,18 @@ export default function useTrip(id: string) {
         setTrip(updatedTrip);
     }
 
-    return {trip, notFound, updateTripQuery, deleteTripQuery, getShortestPathForTripQuery, removeLocationFromTrip};
+    const addLocationToTrip = (addedLocation: Location) => {
+        const updatedTrip = {...trip, locations: [...trip.locations, addedLocation]}
+        setTrip(updatedTrip);
+    }
+
+    return {
+        trip,
+        notFound,
+        updateTripQuery,
+        deleteTripQuery,
+        getShortestPathForTripQuery,
+        addLocationToTrip,
+        removeLocationFromTrip
+    };
 }

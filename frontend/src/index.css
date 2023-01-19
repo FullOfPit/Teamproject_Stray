@@ -4,9 +4,14 @@
   box-sizing: border-box;
 }
 
+:root {
+  --app-header-height: 70px;
+  --bg-color-sticky: white;
+}
+
 html, body {
   margin: 0;
-  padding: 0
+  padding: 0;
 }
 
 body {
@@ -21,3 +26,13 @@ body {
   margin: 0 auto;
   max-width: 1024px;
 }
+
+/* CONTAINER TO CENTER A MESSAGE (almost) */
+.error-message-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vmin;
+}
+

@@ -1,5 +1,6 @@
 import axios from "axios";
 import Trip from "../types/Trip";
+import Location from "../types/Location";
 
 const client = axios.create({
     baseURL: "/api/trips"
@@ -32,6 +33,12 @@ module Api {
 
     export async function deleteTrip(id: string): Promise<Trip> {
         const response = await client.delete(`/${id}`);
+
+        return response.data;
+    }
+
+    export async function getShortestPathForTrip(id: string): Promise<Location[]> {
+        const response = await client.get(`/${id}/shortest-path`);
 
         return response.data;
     }

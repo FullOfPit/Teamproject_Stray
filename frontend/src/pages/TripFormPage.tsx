@@ -9,7 +9,6 @@ import Location from "../types/Location";
 
 export default function TripFormPage() {
 
-    const [locations, setLocations] = useState<Location[]>([]);
     const [trip, setTrip] = useState<Trip>({title: "", tripTimestamp: "", locations: []});
     const navigate =useNavigate();
 
@@ -20,10 +19,8 @@ export default function TripFormPage() {
         })();
     });
 
-    const onAdd = (location : Location)=> {
-        setLocations([...locations,location]);
-        setTrip({...trip, locations: locations})
-    }
+    const onAdd = (location : Location) =>
+        setTrip({...trip, locations: [...trip.locations,location]});
 
     return (
         <>
@@ -41,7 +38,7 @@ export default function TripFormPage() {
                        onChange={e => setTrip({...trip,title: e.target.value})}
                 />
 
-                <LocationMap locations={locations}/>
+                <LocationMap locations={trip.locations}/>
             </main>
 
             <footer className={"trip-form-page-footer"}>

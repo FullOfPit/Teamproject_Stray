@@ -1,7 +1,7 @@
 import Location from "./Location";
 
 type Trip = {
-    id: string,
+    id?: string,
     title: string,
     tripTimestamp: string,
     locations: Location[]

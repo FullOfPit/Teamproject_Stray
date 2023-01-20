@@ -14,7 +14,7 @@ export default function TripFormPage() {
 
     const onSave = (() => {
         (async () => {
-            await Api.postTrip(trip);
+            const response = await Api.postTrip(trip);
             navigate("/");
         })();
     });
@@ -38,7 +38,7 @@ export default function TripFormPage() {
                        onChange={e => setTrip({...trip,title: e.target.value})}
                 />
 
-                <LocationMap locations={trip.locations}/>
+                <LocationMap locations={trip.locations} routing={true}/>
             </main>
 
             <footer className={"trip-form-page-footer"}>

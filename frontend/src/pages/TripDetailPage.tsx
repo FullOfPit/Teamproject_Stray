@@ -6,6 +6,7 @@ import AddLocationForm from "../components/AddLocationForm";
 import Error from "../components/Error";
 import LocationList from "../components/LocationList";
 import Trip from "../types/Trip";
+import {useState} from "react";
 
 type TripDetailParams = {
     id: string,
@@ -16,6 +17,7 @@ type TripDetailParams = {
  */
 export default function TripDetailPage() {
     const navigate = useNavigate();
+    const [showRouting, setShowRouting] = useState<boolean>(false);
 
     const {id} = useParams<keyof TripDetailParams>() as TripDetailParams;
     const {
@@ -37,6 +39,11 @@ export default function TripDetailPage() {
         navigate("/");
     }
 
+    const onStray = async (trip:Trip) => {
+        await getShortestPathForTripQuery(trip);
+        setShowRouting(true);
+    };
+
     return (
         <>
             <header className="detail-page-header">
@@ -49,9 +56,9 @@ export default function TripDetailPage() {
             <main>
                 {trip.locations.length > 0
                     ? <>
-                        <LocationMap locations={trip.locations}/>
+                        <LocationMap locations={trip.locations} routing={showRouting}/>
                         <LocationList locations={trip.locations} onLocationDelete={removeLocationFromTrip}/>
-                        <button onClick={() => getShortestPathForTripQuery(trip)}>Stray!</button>
+                        <button onClick={() => onStray(trip)}>Stray!</button>
                     </>
                     : <div className="error-message-container">
                         <p>You haven't added any locations yet</p>

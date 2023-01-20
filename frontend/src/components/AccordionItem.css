@@ -2,8 +2,21 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
+
+    padding-right: 0.3rem;
 }
 
 .accordion-item-handler {
     cursor: pointer;
+}
+
+.accordion-item-title {
+    margin-top: 0.5rem;
+
+}
+
+.accordion-item-title a {
+    color: black;
+    padding-left: 1rem;
+    text-decoration: none;
 }

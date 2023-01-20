@@ -1,9 +1,9 @@
 .detail-page-header {
     position: sticky;
     top: var(--app-header-height, 70px);
-    text-align: center;
-    background-color: var(--bg-color-sticky, white);
     z-index: 9;
+
+    text-align: center;
 }
 
 .detail-page-actions {
@@ -11,10 +11,18 @@
     justify-content: space-between;
 }
 
+.detail-page-main {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+
+    border: 1px solid black;
+}
+
 .detail-page-footer {
     position: fixed;
     bottom: 0;
-    margin-top: 4rem;
     width: 100%;
+    margin-top: 4rem;
+
     background-color: var(--bg-color-sticky, white);
 }

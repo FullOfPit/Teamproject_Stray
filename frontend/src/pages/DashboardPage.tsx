@@ -13,10 +13,10 @@ export default function DashboardPage() {
         navigate("/trips/create");
     }
 
+
     return (
         <div className="dashboard-container">
             <h1>Planned Trips</h1>
-
             <Accordion trips={trips}/>
         </div>
     );

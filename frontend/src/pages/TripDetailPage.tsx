@@ -6,6 +6,7 @@ import AddLocationForm from "../components/AddLocationForm";
 import Error from "../components/Error";
 import LocationList from "../components/LocationList";
 import Trip from "../types/Trip";
+import Button from "react-bootstrap/Button";
 
 type TripDetailParams = {
     id: string,
@@ -42,22 +43,23 @@ export default function TripDetailPage() {
             <header className="detail-page-header">
                 <h1>{trip.title}</h1>
                 <div className="detail-page-actions">
-                    <button onClick={() => updateTripQuery(trip)}>Save</button>
-                    <button onClick={() => onDelete(trip)}>Delete</button>
+                    <Button variant="light" onClick={() => updateTripQuery(trip)}>Save</Button>
+                    <Button variant="light" onClick={() => onDelete(trip)}>Delete</Button>
                 </div>
             </header>
-            <main>
+            <main className="detail-page-main">
                 {trip.locations.length > 0
                     ? <>
                         <LocationMap locations={trip.locations}/>
                         <LocationList locations={trip.locations} onLocationDelete={removeLocationFromTrip}/>
-                        <button onClick={() => getShortestPathForTripQuery(trip)}>Stray!</button>
+                        <Button variant="success" onClick={() => getShortestPathForTripQuery(trip)}>Stray!</Button>
                     </>
                     : <div className="error-message-container">
                         <p>You haven't added any locations yet</p>
                     </div>
                 }
             </main>
+
 
             <footer className="detail-page-footer">
                 <div className="fixed fixed-bottom">

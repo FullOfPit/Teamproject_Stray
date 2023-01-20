@@ -50,9 +50,18 @@ export default function TripDetailPage() {
             <main className="detail-page-main">
                 {trip.locations.length > 0
                     ? <>
-                        <LocationMap locations={trip.locations}/>
-                        <LocationList locations={trip.locations} onLocationDelete={removeLocationFromTrip}/>
-                        <Button variant="success" onClick={() => getShortestPathForTripQuery(trip)}>Stray!</Button>
+                        <div className={"detail-page-map"}>
+                            <LocationMap locations={trip.locations}/>
+                        </div>
+
+                        <div className={"detail-page-location-list"}>
+                            <LocationList locations={trip.locations} onLocationDelete={removeLocationFromTrip}/>
+                        </div>
+                        <div className={"detail-page-stray-button"}>
+                            <Button variant="light" onClick={() => getShortestPathForTripQuery(trip)}>Stray!</Button>
+                        </div>
+
+
                     </>
                     : <div className="error-message-container">
                         <p>You haven't added any locations yet</p>
@@ -62,9 +71,7 @@ export default function TripDetailPage() {
 
 
             <footer className="detail-page-footer">
-                <div className="fixed fixed-bottom">
                     <AddLocationForm onAdd={addLocationToTrip}/>
-                </div>
             </footer>
         </>
     )

@@ -1,5 +1,6 @@
 import "./AddLocationForm.css";
 import Location from "../types/Location";
+import Button from "react-bootstrap/Button"
 
 export default function AddLocationForm({
     onAdd
@@ -18,9 +19,9 @@ export default function AddLocationForm({
     };
 
     return (
-      <>
+      <div className={"add-location-form"}>
           <p>I am the form for adding locations</p>
-          <button onClick={() => onAdd(location)}>Add</button>
-      </>
+          <Button variant="light" onClick={() => onAdd(location)}>Add</Button>
+      </div>
     );
 }

@@ -4,7 +4,7 @@
     width: 100%;
 
     border-bottom: 1px solid black;
-    background-color: white;
+    background-color: #FA9639;
 }
 
 .header-bar-container {
@@ -31,7 +31,7 @@
     height: 50px;
     width: 50px;
     border: 1px solid gray;
-    border-radius: 50%;
+    border-radius: 35%;
     box-shadow: dimgray;
 }
 

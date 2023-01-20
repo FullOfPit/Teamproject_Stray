@@ -2,6 +2,10 @@
     position: sticky;
     top: var(--app-header-height, 70px);
     z-index: 9;
+    padding-bottom: 1rem;
+    border-bottom: 1px darkblue solid;
+
+    background-color: #2162FA;
 
     text-align: center;
 }
@@ -12,18 +16,41 @@
 }
 
 .detail-page-main {
+    z-index: 5;
     margin-top: 1rem;
-    margin-bottom: 1rem;
+    margin-bottom: 5rem;
 
     border: 1px solid black;
     border-radius: 10px;
 }
 
+.detail-page-map {
+    padding-bottom: 1.5rem;
+}
+
+.detail-page-location-list {
+    padding-left: 1rem;
+    padding-right: 1rem;
+
+    font-size: 1.5rem;
+}
+
+.detail-page-stray-button {
+    display: flex;
+    justify-content: center;
+
+    padding-bottom: 1rem;
+}
+
 .detail-page-footer {
     position: fixed;
     bottom: 0;
+    left: 0;
     width: 100%;
-    margin-top: 4rem;
+    overflow-x: scroll;
+    text-align: center;
+
+    border-top: 1px darkblue solid;
 
     background-color: var(--bg-color-sticky, white);
 }

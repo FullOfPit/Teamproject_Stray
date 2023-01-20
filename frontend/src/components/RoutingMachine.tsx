@@ -1,31 +1,25 @@
-import L, {ControlOptions, latLng} from "leaflet";
+import L from "leaflet";
 import {createControlComponent} from "@react-leaflet/core";
 import "leaflet-routing-machine";
+import Location from "../types/Location";
+import "./RoutingMachine.css";
 
+export default function Routing({locations}: {
+    locations: Location[]
+}) {
+    const waypoints = locations.map(l => new L.LatLng(l.latitude, l.longitude));
 
-const createRoutineMachineLayer = ({routes}:{routes:L.LatLng[]}) => {
-
-    return L.Routing.control({
-        waypoints: routes,
+    const RoutingMachine = createControlComponent(() => L.Routing.control({
+        waypoints: waypoints,
         lineOptions: {
             styles: [{color: "#6FA1EC", weight: 4}],
             extendToWaypoints: false,
             missingRouteTolerance: 0
         },
+        showAlternatives: false,
+    }));
 
-    });
-};
-
-const RoutingMachine = createControlComponent(createRoutineMachineLayer);
-
-export default RoutingMachine;
-
-
-
-
-/*
-[
-    L.latLng(33.52001088075479, 36.26829385757446),
-    L.latLng(33.50546582848033, 36.29547681726967)
-]
- */
+    return (
+        <RoutingMachine/>
+    )
+}

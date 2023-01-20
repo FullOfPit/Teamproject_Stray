@@ -2,8 +2,7 @@ import "./LocationMap.css";
 import Location from "../types/Location";
 import {MapContainer, TileLayer} from "react-leaflet";
 import LocationMarkerGroup from "./LocationMarkerGroup";
-import RoutingMachine from "./RoutingMachine";
-import L from "leaflet";
+import Routing from "./RoutingMachine";
 
 export default function LocationMap({
     locations,
@@ -22,7 +21,7 @@ export default function LocationMap({
                 />
                 <LocationMarkerGroup locations={locations}/>
 
-                {routing ? <RoutingMachine routes={locations.map(l => new L.LatLng(l.longitude,l.latitude))}/> : null}
+                {routing ? <Routing locations={locations}/> : null}
             </MapContainer>
         </>
     )

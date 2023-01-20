@@ -6,7 +6,7 @@ import DashboardPage from './pages/DashboardPage';
 import LoginPage from "./pages/LoginPage";
 import TripDetailPage from "./pages/TripDetailPage";
 import TripFormPage from "./pages/TripFormPage";
-import SettingsPage from "./pages/SettingsPage";
+
 
 function App() {
 
@@ -23,7 +23,6 @@ function App() {
                     <Route path="/login" element={<LoginPage />} />
                     <Route path="/trips/:id" element={<TripDetailPage />} />
                     <Route path="/trips/create" element={<TripFormPage />} />
-                    <Route path="/settings" element={<SettingsPage/>} />
                 </Routes>
             </main>
         </>

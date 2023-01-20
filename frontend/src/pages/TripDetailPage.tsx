@@ -43,7 +43,7 @@ export default function TripDetailPage() {
             <header className="detail-page-header">
                 <h1>{trip.title}</h1>
                 <div className="detail-page-actions">
-                    <Button variant="light" onClick={() => updateTripQuery(trip)}>Save</Button>
+                    <Button variant="light" onClick={() => navigate("/")}>Back</Button>
                     <Button variant="light" onClick={() => onDelete(trip)}>Delete</Button>
                 </div>
             </header>

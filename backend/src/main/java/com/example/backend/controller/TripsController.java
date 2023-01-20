@@ -6,6 +6,7 @@ import com.example.backend.model.Trip;
 import com.example.backend.service.LocationService;
 import com.example.backend.service.TripService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -19,7 +20,7 @@ public class TripsController {
 
     @GetMapping
     public List<Trip> getAll() {
-        return this.tripService.getAll();
+        return this.tripService.getAll("tripTimeStamp", Sort.Direction.DESC);
     }
 
     @GetMapping(path = "/{id}")

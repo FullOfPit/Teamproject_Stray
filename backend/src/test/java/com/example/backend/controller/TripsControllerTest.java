@@ -50,13 +50,6 @@ class TripsControllerTest {
         return new Trip("abc2", testTimeStamp(), "My Trip 2", new ArrayList<>());
     }
 
-    private List<Trip> testTripList() {
-        return List.of(
-                testTrip1(),
-                testTrip2()
-        );
-    }
-
     private LocalDateTime testTimeStamp() {
         return LocalDateTime.of(2020, 1, 1, 0,0);
     }
@@ -70,32 +63,46 @@ class TripsControllerTest {
     }
 
     @Test
-    void getAll_returnAllTripsWhenTripsExist() throws Exception {
+    void getAll_returnAllTripsSortedByTimestampDescWhenTripsExist() throws Exception {
         //given
-        this.tripRepo.saveAll(testTripList());
+        LocalDateTime dateTime = LocalDateTime.of(2020, 1, 1, 0, 0, 0);
+
+        Trip trip1 = testTrip1();
+        trip1.setTripTimeStamp(dateTime);
+
+        Trip trip2 = testTrip2();
+        trip2.setTripTimeStamp(dateTime.plusSeconds(1));
+
+        this.tripRepo.saveAll(List.of(trip1, trip2));
 
         String expected = """
-                [{
-                    "id":"abc1",
-                    "tripTimeStamp" : "2020-01-01T00:00:00",
-                    "title": "My Trip",
-                    "locations": [{
-                       "id": "xyz1",
-                       "name": "Kölner Dom",
-                       "latitude": 50.941386546092225,
-                       "longitude": 6.958270670147375
-                     },{
-                        "id": "xyz2",
-                        "name": "Planten un Blomen",
-                        "latitude": 53.5625456617408,
-                        "longitude": 9.98188182570993
-                    }]
-                },{
-                    "id":"abc2",
-                    "tripTimeStamp" : "2020-01-01T00:00:00",
-                    "title": "My Trip 2",
-                    "locations":[]
-                }]
+                [
+                    {
+                        "id":"abc2",
+                        "tripTimeStamp" : "2020-01-01T00:00:01",
+                        "title": "My Trip 2",
+                        "locations":[]
+                    },
+                    {
+                        "id":"abc1",
+                        "tripTimeStamp" : "2020-01-01T00:00:00",
+                        "title": "My Trip",
+                        "locations": [
+                            {
+                               "id": "xyz1",
+                               "name": "Kölner Dom",
+                               "latitude": 50.941386546092225,
+                               "longitude": 6.958270670147375
+                            },
+                            {
+                                "id": "xyz2",
+                                "name": "Planten un Blomen",
+                                "latitude": 53.5625456617408,
+                                "longitude": 9.98188182570993
+                            }
+                        ]
+                    }
+                ]
                 """;
 
         //when and then

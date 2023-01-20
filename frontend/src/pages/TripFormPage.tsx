@@ -10,7 +10,7 @@ import Location from "../types/Location";
 export default function TripFormPage() {
 
     const [trip, setTrip] = useState<Trip>({title: "", tripTimestamp: "", locations: []});
-    const navigate =useNavigate();
+    const navigate = useNavigate();
 
     const onSave = (() => {
         (async () => {
@@ -19,8 +19,7 @@ export default function TripFormPage() {
         })();
     });
 
-    const onAdd = (location : Location) =>
-        setTrip({...trip, locations: [...trip.locations,location]});
+    const onLocationAdd = (location: Location) => setTrip({...trip, locations: [...trip.locations, location]});
 
     return (
         <>
@@ -32,10 +31,11 @@ export default function TripFormPage() {
                 <button onClick={trip.title && trip.locations
                     ? onSave
                     : () => alert("You do not have a trip title or trip locations set")
-                }>Save</button>
+                }>Save
+                </button>
 
                 <input placeholder={"Trip title ..."}
-                       onChange={e => setTrip({...trip,title: e.target.value})}
+                       onChange={e => setTrip({...trip, title: e.target.value})}
                 />
 
                 <LocationMap locations={trip.locations}/>
@@ -43,7 +43,7 @@ export default function TripFormPage() {
 
             <footer className={"trip-form-page-footer"}>
                 <div className={"fixed fixed-bottom"}>
-                    <AddLocationForm onAdd={onAdd}/>
+                    <AddLocationForm onAdd={onLocationAdd}/>
                 </div>
             </footer>
         </>

@@ -49,7 +49,7 @@ export default function TripDetailPage() {
             <main>
                 {trip.locations.length > 0
                     ? <>
-                        <LocationMap locations={trip.locations}/>
+                        <LocationMap locations={trip.locations} routing={true}/>
                         <LocationList locations={trip.locations} onLocationDelete={removeLocationFromTrip}/>
                         <button onClick={() => getShortestPathForTripQuery(trip)}>Stray!</button>
                     </>

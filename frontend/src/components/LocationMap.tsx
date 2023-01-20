@@ -3,10 +3,16 @@ import Location from "../types/Location";
 import {MapContainer, TileLayer} from "react-leaflet";
 import LocationMarkerGroup from "./LocationMarkerGroup";
 import RoutingMachine from "./RoutingMachine";
+import L from "leaflet";
 
-export default function LocationMap({locations}: {
+export default function LocationMap({
+    locations,
+    routing
+}:{
     locations: Location[]
+    routing:boolean
 }) {
+
     return (
         <>
             <MapContainer className="map-container" center={[53.56159742972676, 9.915145101001647]} zoom={10}>
@@ -15,7 +21,8 @@ export default function LocationMap({locations}: {
                     url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                 />
                 <LocationMarkerGroup locations={locations}/>
-                <RoutingMachine/>
+
+                {routing ? <RoutingMachine routes={locations.map(l => new L.LatLng(l.longitude,l.latitude))}/> : null}
             </MapContainer>
         </>
     )

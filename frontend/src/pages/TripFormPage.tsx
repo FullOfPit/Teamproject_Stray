@@ -35,10 +35,9 @@ export default function TripFormPage() {
                 </button>
 
                 <input placeholder={"Trip title ..."}
-                       onChange={e => setTrip({...trip, title: e.target.value})}
-                />
+                       onChange={e => setTrip({...trip, title: e.target.value})}/>
 
-                <LocationMap locations={trip.locations} routing={true}/>
+                <LocationMap locations={trip.locations} routing={false}/>
             </main>
 
             <footer className={"trip-form-page-footer"}>

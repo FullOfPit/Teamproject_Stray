@@ -2,12 +2,13 @@ import SearchResult from "../types/openstreetmap/SearchResult";
 import {ChangeEvent, useState} from "react";
 import Location from "../types/Location";
 import LocationMap from "./LocationMap";
+import "./FindLocationOverlay.css";
 
 export default function FindLocationOverlay({
     searchResults,
     onAdd,
     onCancel
-}: {
+}:{
     searchResults: SearchResult[],
     onAdd: (addLocation: Location) => void,
     onCancel: () => void
@@ -24,33 +25,45 @@ export default function FindLocationOverlay({
             latitude: 0,
             longitude: 0
         };
+
     const [addLocation, setAddLocation] = useState<Location>(initialAddLocation);
+    const [selected, setSelected] = useState<SearchResult | undefined>(searchResults[0]);
 
     const onChange = (e: ChangeEvent<HTMLSelectElement>) => {
-        const chosen: SearchResult | undefined = searchResults.filter(place => place.place_id === Number(e.target.value)).shift();
-        chosen && setAddLocation({
-            name: chosen.display_name,
-            latitude: chosen.lat,
-            longitude: chosen.lon
+        setSelected(searchResults.filter(place => place.place_id === Number(e.target.value)).shift());
+        selected && setAddLocation({
+            name: selected.display_name,
+            latitude: selected.lat,
+            longitude: selected.lon
         });
     }
-
+    console.log(selected);
+    console.log(addLocation);
     return (
         <>
-            <p>Find Location</p>
+            <div className={"overlay-container"}>
+                <div>
+                    <h3>Find Location</h3>
+                </div>
 
-            <select onChange={onChange}>
-                {searchResults.map(place =>
-                    <option key={place.place_id} value={place.place_id}>
-                        {place.display_name}
-                    </option>)}
-            </select>
+                <div className={"select-list"}>
+                    <select onChange={onChange}>
+                        {searchResults.map(place =>
+                            <option key={place.place_id} value={place.place_id}>
+                                {place.display_name}
+                            </option>)}
+                    </select>
+                </div>
 
-            <LocationMap locations={[addLocation]}/>
+                <div>
+                    <LocationMap locations={[addLocation]} routing={false}/>
+                </div>
 
-            <button onClick={onCancel}>Cancel</button>
-
-            <button onClick={() => onAdd(addLocation)}>Add</button>
+                <div className={"buttons-container"}>
+                    <button onClick={onCancel}>Cancel</button>
+                    <button onClick={() => onAdd(addLocation)}>Add</button>
+                </div>
+            </div>
         </>
     )
 }

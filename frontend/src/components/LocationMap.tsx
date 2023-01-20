@@ -19,8 +19,11 @@ export default function LocationMap({
                     attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                     url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                 />
-                {routing ? <Routing locations={locations}/> : <LocationMarkerGroup locations={locations}/>}
 
+                {routing ?
+                    <Routing locations={locations}/>
+                    :
+                    <LocationMarkerGroup locations={locations}/>}
 
             </MapContainer>
         </>

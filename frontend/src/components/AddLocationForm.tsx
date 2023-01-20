@@ -1,5 +1,9 @@
 import "./AddLocationForm.css";
 import Location from "../types/Location";
+import FindLocationOverlay from "./FindLocationOverlay";
+import {FormEvent, useState} from "react";
+import SearchResult from "../types/openstreetmap/SearchResult";
+import axios from "axios";
 
 export default function AddLocationForm({
     onAdd
@@ -24,9 +28,12 @@ export default function AddLocationForm({
 
     const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        const searchResults = await search(searchLocation);
-        setSearchResults(searchResults);
+        const results = await search(searchLocation);
+        console.log(results);
+        setSearchResults(results);
+        console.log(searchResults);
     };
+
 
     const onLocationAdd = (location:Location) =>{
         setSearchLocation("");
@@ -43,10 +50,14 @@ export default function AddLocationForm({
                 <button>Search</button>
             </form>
 
-            <br/>
+
             {searchResults.length > 0 &&
-                <FindLocationOverlay searchResults={searchResults} onAdd={onLocationAdd}
-                                     onCancel={() => setSearchLocation("")}/>}
+                <div className={"overlay"}>
+                    <div className={"overlay-inner"}>
+                        <FindLocationOverlay searchResults={searchResults} onAdd={onLocationAdd}
+                                             onCancel={() => setSearchLocation("")}/>
+                    </div>
+                </div>}
         </>
     );
 }

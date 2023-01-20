@@ -16,6 +16,7 @@
     margin-bottom: 1rem;
 
     border: 1px solid black;
+    border-radius: 10px;
 }
 
 .detail-page-footer {

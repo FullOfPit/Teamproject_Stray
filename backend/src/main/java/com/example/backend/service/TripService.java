@@ -7,6 +7,7 @@ import com.example.backend.model.Location;
 import com.example.backend.model.Trip;
 import com.example.backend.repository.TripRepo;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -22,7 +23,13 @@ public class TripService {
     private final TimeStampGenerator timeStampGenerator;
 
     public List<Trip> getAll() {
-        return this.tripRepo.findAll();
+        return this.getAll("id", Sort.Direction.ASC);
+    }
+
+    public List<Trip> getAll(String sortBy, Sort.Direction sortDirection) {
+        return this.tripRepo.findAll(
+                Sort.by(sortDirection, sortBy)
+        );
     }
 
     public Trip getById(String id) throws Exception {

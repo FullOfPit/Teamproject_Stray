@@ -1,9 +1,5 @@
 import "./AddLocationForm.css";
 import Location from "../types/Location";
-import FindLocationOverlay from "./FindLocationOverlay";
-import SearchResult from "../types/openstreetmap/SearchResult";
-import {FormEvent, useState} from "react";
-import axios from "axios";
 
 export default function AddLocationForm({
     onAdd

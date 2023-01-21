@@ -13,6 +13,7 @@ export default function AddLocationForm({
 
     const [searchLocation, setSearchLocation] = useState<string>("");
     const [searchResults, setSearchResults] = useState<SearchResult[]>([]);
+    const [showOverlay, setShowOverlay] =useState<boolean>(false)
 
     const search = async (searchedLocation: String) => {
         const response = await axios.get("https://nominatim.openstreetmap.org/search", {
@@ -21,7 +22,7 @@ export default function AddLocationForm({
                 "accept-language": "de-de",
                 format: "jsonv2"
             }
-        })
+        });
 
         return response.data;
     }
@@ -32,12 +33,19 @@ export default function AddLocationForm({
         console.log(results);
         setSearchResults(results);
         console.log(searchResults);
+        setShowOverlay(true);
     };
 
 
     const onLocationAdd = (location:Location) =>{
         setSearchLocation("");
         onAdd(location);
+        setShowOverlay(false);
+    }
+
+    const onCancel = () => {
+        setSearchLocation("");
+        setShowOverlay(false);
     }
 
     return (
@@ -51,11 +59,11 @@ export default function AddLocationForm({
             </form>
 
 
-            {searchResults.length > 0 &&
+            {searchResults.length > 0 && showOverlay &&
                 <div className={"overlay"}>
                     <div className={"overlay-inner"}>
                         <FindLocationOverlay searchResults={searchResults} onAdd={onLocationAdd}
-                                             onCancel={() => setSearchLocation("")}/>
+                                             onCancel={onCancel}/>
                     </div>
                 </div>}
         </>

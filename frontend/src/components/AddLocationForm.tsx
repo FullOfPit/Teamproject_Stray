@@ -31,9 +31,7 @@ export default function AddLocationForm({
 
     const onSubmit = async () => {
         const results = await search(searchLocation);
-        console.log(results);
         setSearchResults(results);
-        console.log(searchResults);
         setShowOverlay(true);
     };
 

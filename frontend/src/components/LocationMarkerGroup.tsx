@@ -1,7 +1,8 @@
 import {FeatureGroup, Marker, Popup, useMap} from "react-leaflet";
-import {LatLng} from "leaflet";
+import L, {LatLng} from "leaflet";
 import {useRef} from "react";
 import Location from "../types/Location";
+import "./LocationMarkerGroup.css";
 
 export default function LocationMarkerGroup({locations}: {
     locations: Location[],

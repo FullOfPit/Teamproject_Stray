@@ -23,7 +23,7 @@ export default function AccordionItem({trip, isExpanded, onExpand, onClose}: {
             </header>
             {isExpanded &&
               <main className="accordion-body">
-                <LocationMap locations={trip.locations}/>
+                <LocationMap locations={trip.locations} routing={false}/>
               </main>
             }
         </div>

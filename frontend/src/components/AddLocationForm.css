@@ -1,7 +1,28 @@
 .add-location-form {
     background-color: #FA9639;
     padding-bottom: 0.8rem;
-
     text-align: center;
     border-top: 1px darkblue solid;
+}
+
+.overlay{
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: var(--app-header-height, 70px);
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0,0,0,.5);
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.overlay-inner{
+    position: relative;
+    width: 80%;
+    padding: 2rem;
+    background-color: var(--bg-color-sticky, white);
 }

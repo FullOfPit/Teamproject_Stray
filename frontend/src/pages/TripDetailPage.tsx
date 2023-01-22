@@ -6,6 +6,7 @@ import AddLocationForm from "../components/AddLocationForm";
 import Error from "../components/Error";
 import LocationList from "../components/LocationList";
 import Trip from "../types/Trip";
+import {useState} from "react";
 import Button from "react-bootstrap/Button";
 
 type TripDetailParams = {
@@ -17,6 +18,7 @@ type TripDetailParams = {
  */
 export default function TripDetailPage() {
     const navigate = useNavigate();
+    const [showRouting, setShowRouting] = useState<boolean>(false);
 
     const {id} = useParams<keyof TripDetailParams>() as TripDetailParams;
     const {
@@ -38,6 +40,11 @@ export default function TripDetailPage() {
         navigate("/");
     }
 
+    const onStray = async (trip:Trip) => {
+        await getShortestPathForTripQuery(trip);
+        setShowRouting(true);
+    };
+
     return (
         <>
             <header className="detail-page-header">
@@ -50,25 +57,21 @@ export default function TripDetailPage() {
             <main className="detail-page-main">
                 {trip.locations.length > 0
                     ? <>
-                        <div className={"detail-page-map"}>
-                            <LocationMap locations={trip.locations}/>
-                        </div>
-
-                        <div className={"detail-page-location-list"}>
-                            <LocationList locations={trip.locations} onLocationDelete={removeLocationFromTrip}/>
-                        </div>
-                        <div className={"detail-page-stray-button"}>
-                            <Button variant="light" onClick={() => getShortestPathForTripQuery(trip)}>Stray!</Button>
-                        </div>
-
-
+                    <div className={"detail-page-map"}>
+                        <LocationMap locations={trip.locations} routing={showRouting}/>
+                    </div>
+                    <div className={"detail-page-location-list"}>
+                        <LocationList locations={trip.locations} onLocationDelete={removeLocationFromTrip}/>
+                    </div>
+                    <div className={"detail-page-stray-button"}>
+                        <Button variant={"light"} onClick={() => onStray(trip)}>Stray!</Button>
+                    </div>
                     </>
                     : <div className="error-message-container">
                         <p>You haven't added any locations yet</p>
                     </div>
                 }
             </main>
-
 
             <footer className="detail-page-footer">
                     <AddLocationForm onAdd={addLocationToTrip}/>

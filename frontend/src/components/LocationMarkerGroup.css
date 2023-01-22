@@ -1,0 +1,7 @@
+.leaflet-marker-pane img:first-child{
+    filter: hue-rotate(240deg);
+}
+
+.leaflet-marker-pane img:last-child{
+    filter: hue-rotate(120deg);
+}

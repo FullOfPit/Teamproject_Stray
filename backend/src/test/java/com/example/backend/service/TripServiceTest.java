@@ -8,6 +8,7 @@ import com.example.backend.model.Trip;
 import com.example.backend.repository.TripRepo;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.springframework.data.domain.Sort;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -26,14 +27,17 @@ class TripServiceTest {
     }
 
     @Test
-    void getAll_returnTripsFromRepo() {
+    void getAll_returnTripsSortedByIdAscPerDefault() {
         //given
         List<Trip> expected = new ArrayList<>(List.of(
                 new Trip("abc1",testTimeStamp(), "My Trip", new ArrayList<>()),
                 new Trip("abc2",testTimeStamp(), "My Trip 2", new ArrayList<>())
         ));
+
+        Sort sort = Sort.by(Sort.Direction.ASC, "id");
+
         TripRepo tripRepo = mock(TripRepo.class);
-        when(tripRepo.findAll()).thenReturn(expected);
+        when(tripRepo.findAll(eq(sort))).thenReturn(expected);
 
         IdGenerator idGenerator = mock(IdGenerator.class);
         TimeStampGenerator timeStampGenerator = mock(TimeStampGenerator.class);
@@ -44,7 +48,35 @@ class TripServiceTest {
 
         //then
         assertEquals(expected, actual);
-        verify(tripRepo).findAll();
+        verify(tripRepo).findAll(eq(sort));
+    }
+
+    @Test
+    void getAll_whenInvokedWithSortParamsThenPassesSortParamsToRepo() {
+        //given
+        String sortAttr = "title";
+        Sort.Direction sortDirection = Sort.Direction.DESC;
+
+        List<Trip> expected = new ArrayList<>(List.of(
+                new Trip("abc1", testTimeStamp(), "My Trip", new ArrayList<>()),
+                new Trip("abc2", testTimeStamp(), "My Trip 2", new ArrayList<>())
+        ));
+
+        Sort sort = Sort.by(sortDirection, sortAttr);
+
+        TripRepo tripRepo = mock(TripRepo.class);
+        when(tripRepo.findAll(eq(sort))).thenReturn(expected);
+
+        IdGenerator idGenerator = mock(IdGenerator.class);
+        TimeStampGenerator timeStampGenerator = mock(TimeStampGenerator.class);
+
+        //when
+        TripService tripService = new TripService(tripRepo, idGenerator,timeStampGenerator);
+        List<Trip> actual = tripService.getAll(sortAttr, sortDirection);
+
+        //then
+        assertEquals(expected, actual);
+        verify(tripRepo).findAll(eq(sort));
     }
 
     @Test

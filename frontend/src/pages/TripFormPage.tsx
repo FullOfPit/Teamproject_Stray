@@ -13,17 +13,16 @@ import Button from "react-bootstrap/Button";
 export default function TripFormPage() {
 
     const [trip, setTrip] = useState<Trip>({title: "", tripTimestamp: "", locations: []});
-    const navigate =useNavigate();
+    const navigate = useNavigate();
 
     const onSave = (() => {
         (async () => {
-            await Api.postTrip(trip);
+            const response = await Api.postTrip(trip);
             navigate("/");
         })();
     });
 
-    const onAdd = (location : Location) =>
-        setTrip({...trip, locations: [...trip.locations,location]});
+    const onLocationAdd = (location: Location) => setTrip({...trip, locations: [...trip.locations, location]});
 
     return (
         <>
@@ -39,21 +38,17 @@ export default function TripFormPage() {
                             : () => alert("You do not have a trip title or trip locations set")
                         }>Save</Button>
                         <Form.Control
-                            placeholder={"Trip Title"}
-                            onChange={e => setTrip({...trip,title: e.target.value})}
-
-                        />
+                            placeholder={"Trip Title "}
+                            onChange={e => setTrip({...trip, title: e.target.value})}/>
                     </InputGroup>
-
                 </div>
 
-
-                <LocationMap locations={trip.locations}/>
+                <LocationMap locations={trip.locations} routing={false}/>
             </main>
 
             <footer className={"trip-form-page-footer"}>
                 <div className={"fixed fixed-bottom"}>
-                    <AddLocationForm onAdd={onAdd}/>
+                    <AddLocationForm onAdd={onLocationAdd}/>
                 </div>
             </footer>
         </>

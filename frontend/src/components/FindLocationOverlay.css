@@ -1,5 +1,5 @@
 .overlay-container div{
-    margin-bottom: 0.5rem;
+    margin-bottom: 1rem;
 }
 
 .select-list select{
@@ -9,7 +9,7 @@
 .buttons-container{
     display: inline-flex;
     flex-direction: row-reverse;
-    gap: 5px;
+    gap: 1rem;
 }
 
 button{

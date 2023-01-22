@@ -29,8 +29,7 @@ export default function AddLocationForm({
         return response.data;
     }
 
-    const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
+    const onSubmit = async () => {
         const results = await search(searchLocation);
         console.log(results);
         setSearchResults(results);
@@ -52,14 +51,10 @@ export default function AddLocationForm({
 
     return (
         <>
-            <p>Add location</p>
-
-            <InputGroup onSubmit={onSubmit}>
-
-                <Button variant={"light"}>Search</Button>
+            <InputGroup className={"input-group"}>
                 <Form.Control value={searchLocation} placeholder={"search location..."}
                        onChange={(e) => setSearchLocation(e.target.value)}/>
-
+                <Button variant={"outline-dark"} type={"submit"} onClick={onSubmit}>Search</Button>
             </InputGroup>
 
 

@@ -1,3 +1,8 @@
+.title{
+    color: white;
+    margin: 1rem;
+    text-align: center;
+}
 .add-form-page {
     position: fixed;
     bottom: 0;
@@ -12,10 +17,10 @@
 
     overflow-x: scroll;
 
-    background-color: #FA9639;
+    background-color: #FCA311;
 }
 
 .add-form-page .input-group{
-    width: 80%;
+    width: 82%;
 
 }

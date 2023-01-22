@@ -3,6 +3,7 @@ import {ChangeEvent, useState} from "react";
 import Location from "../types/Location";
 import LocationMap from "./LocationMap";
 import "./FindLocationOverlay.css";
+import Button from "react-bootstrap/Button";
 
 export default function FindLocationOverlay({
     searchResults,
@@ -60,8 +61,8 @@ export default function FindLocationOverlay({
                 </div>
 
                 <div className={"buttons-container"}>
-                    <button onClick={onCancel}>Cancel</button>
-                    <button onClick={() => onAdd(addLocation)}>Add</button>
+                    <Button variant={"light"} onClick={onCancel}>Cancel</Button>
+                    <Button variant={"light"} onClick={() => onAdd(addLocation)}>Add</Button>
                 </div>
             </div>
         </>

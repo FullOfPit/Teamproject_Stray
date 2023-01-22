@@ -7,6 +7,7 @@ import Error from "../components/Error";
 import LocationList from "../components/LocationList";
 import Trip from "../types/Trip";
 import {useState} from "react";
+import Button from "react-bootstrap/Button";
 
 type TripDetailParams = {
     id: string,
@@ -23,7 +24,6 @@ export default function TripDetailPage() {
     const {
         trip,
         notFound,
-        updateTripQuery,
         deleteTripQuery,
         addLocationToTrip,
         removeLocationFromTrip,
@@ -49,16 +49,22 @@ export default function TripDetailPage() {
             <header className="detail-page-header">
                 <h1>{trip.title}</h1>
                 <div className="detail-page-actions">
-                    <button onClick={() => updateTripQuery(trip)}>Save</button>
-                    <button onClick={() => onDelete(trip)}>Delete</button>
+                    <Button variant="light" onClick={() => navigate("/")}>Back</Button>
+                    <Button variant="light" onClick={() => onDelete(trip)}>Delete</Button>
                 </div>
             </header>
-            <main>
+            <main className="detail-page-main">
                 {trip.locations.length > 0
                     ? <>
+                    <div className={"detail-page-map"}>
                         <LocationMap locations={trip.locations} routing={showRouting}/>
+                    </div>
+                    <div className={"detail-page-location-list"}>
                         <LocationList locations={trip.locations} onLocationDelete={removeLocationFromTrip}/>
-                        <button onClick={() => onStray(trip)}>Stray!</button>
+                    </div>
+                    <div className={"detail-page-stray-button"}>
+                        <Button variant={"light"} onClick={() => onStray(trip)}>Stray!</Button>
+                    </div>
                     </>
                     : <div className="error-message-container">
                         <p>You haven't added any locations yet</p>
@@ -66,10 +72,8 @@ export default function TripDetailPage() {
                 }
             </main>
 
-            <footer className="detail-page-footer">
-                <div className="fixed fixed-bottom">
+            <footer className="add-form-page">
                     <AddLocationForm onAdd={addLocationToTrip}/>
-                </div>
             </footer>
         </>
     )

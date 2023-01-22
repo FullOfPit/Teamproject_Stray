@@ -1,9 +1,13 @@
 .detail-page-header {
     position: sticky;
     top: var(--app-header-height, 70px);
+    z-index: 9;
+    padding-bottom: 1rem;
+    border-bottom: 1px darkblue solid;
+
+    background-color: #2162FA;
+
     text-align: center;
-    background-color: var(--bg-color-sticky, white);
-    z-index: 10;
 }
 
 .detail-page-actions {
@@ -11,10 +15,45 @@
     justify-content: space-between;
 }
 
-.detail-page-footer {
+.detail-page-main {
+    z-index: 5;
+    margin-top: 1rem;
+    margin-bottom: 5rem;
+
+    border: 1px solid black;
+    border-radius: 10px;
+}
+
+.detail-page-map {
+    padding-bottom: 1.5rem;
+}
+
+.detail-page-location-list {
+    padding-left: 1rem;
+    padding-right: 1rem;
+
+    font-size: 1.5rem;
+}
+
+.detail-page-stray-button {
+    display: flex;
+    justify-content: center;
+
+    padding-bottom: 0.8rem;
+}
+
+.add-form-page {
     position: fixed;
     bottom: 0;
-    margin-top: 4rem;
+    left: 0;
     width: 100%;
-    background-color: var(--bg-color-sticky, white);
+
+    display: flex;
+    flex-direction: column;
+
+    text-align: center;
+
+    overflow-x: scroll;
+
+    background-color: #FA9639;
 }

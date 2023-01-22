@@ -6,6 +6,9 @@ import {useState} from "react";
 import {useNavigate} from "react-router-dom";
 import Api from "../api/Api";
 import Location from "../types/Location";
+import Form from "react-bootstrap/Form";
+import InputGroup from "react-bootstrap/InputGroup";
+import Button from "react-bootstrap/Button";
 
 export default function TripFormPage() {
 
@@ -28,22 +31,23 @@ export default function TripFormPage() {
             </header>
 
             <main>
-                <button onClick={trip.title && trip.locations
-                    ? onSave
-                    : () => alert("You do not have a trip title or trip locations set")
-                }>Save
-                </button>
-
-                <input placeholder={"Trip title ..."}
-                       onChange={e => setTrip({...trip, title: e.target.value})}/>
+                <div>
+                    <InputGroup>
+                        <Button variant={"light"} onClick={trip.title && trip.locations
+                            ? onSave
+                            : () => alert("You do not have a trip title or trip locations set")
+                        }>Save</Button>
+                        <Form.Control
+                            placeholder={"Trip Title "}
+                            onChange={e => setTrip({...trip, title: e.target.value})}/>
+                    </InputGroup>
+                </div>
 
                 <LocationMap locations={trip.locations} routing={false}/>
             </main>
 
-            <footer className={"trip-form-page-footer"}>
-                <div className={"fixed fixed-bottom"}>
+            <footer className={"add-form-page"}>
                     <AddLocationForm onAdd={onLocationAdd}/>
-                </div>
             </footer>
         </>
     );

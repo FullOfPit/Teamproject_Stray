@@ -4,6 +4,8 @@ import FindLocationOverlay from "./FindLocationOverlay";
 import {FormEvent, useState} from "react";
 import SearchResult from "../types/openstreetmap/SearchResult";
 import axios from "axios";
+import Button from "react-bootstrap/Button"
+import {Form, InputGroup} from "react-bootstrap";
 
 export default function AddLocationForm({
     onAdd
@@ -52,11 +54,13 @@ export default function AddLocationForm({
         <>
             <p>Add location</p>
 
-            <form onSubmit={onSubmit}>
-                <input value={searchLocation} placeholder={"search location..."}
+            <InputGroup onSubmit={onSubmit}>
+
+                <Button variant={"light"}>Search</Button>
+                <Form.Control value={searchLocation} placeholder={"search location..."}
                        onChange={(e) => setSearchLocation(e.target.value)}/>
-                <button>Search</button>
-            </form>
+
+            </InputGroup>
 
 
             {searchResults.length > 0 && showOverlay &&

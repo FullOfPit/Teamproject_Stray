@@ -53,11 +53,13 @@ export default function useTrip(id: string) {
     const removeLocationFromTrip = (deletedLocation: Location) => {
         const updatedTrip = {...trip, locations: trip.locations.filter(location => location.id !== deletedLocation.id)}
         setTrip(updatedTrip);
+        updateTripQuery(updatedTrip);
     }
 
     const addLocationToTrip = (addedLocation: Location) => {
         const updatedTrip = {...trip, locations: [...trip.locations, addedLocation]}
         setTrip(updatedTrip);
+        updateTripQuery(updatedTrip);
     }
 
     return {

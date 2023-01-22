@@ -39,15 +39,21 @@
     display: flex;
     justify-content: center;
 
-    padding-bottom: 1rem;
+    padding-bottom: 0.8rem;
 }
 
-.detail-page-footer {
+.add-form-page {
     position: fixed;
     bottom: 0;
     left: 0;
     width: 100%;
+
+    display: flex;
+    flex-direction: column;
+
+    text-align: center;
+
     overflow-x: scroll;
 
-    background-color: var(--bg-color-sticky, white);
+    background-color: #FA9639;
 }

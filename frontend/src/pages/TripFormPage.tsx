@@ -46,10 +46,8 @@ export default function TripFormPage() {
                 <LocationMap locations={trip.locations} routing={false}/>
             </main>
 
-            <footer className={"trip-form-page-footer"}>
-                <div className={"fixed fixed-bottom"}>
+            <footer className={"add-form-page"}>
                     <AddLocationForm onAdd={onLocationAdd}/>
-                </div>
             </footer>
         </>
     );

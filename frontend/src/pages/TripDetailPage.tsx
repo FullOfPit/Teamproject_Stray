@@ -24,7 +24,6 @@ export default function TripDetailPage() {
     const {
         trip,
         notFound,
-        updateTripQuery,
         deleteTripQuery,
         addLocationToTrip,
         removeLocationFromTrip,
@@ -73,7 +72,7 @@ export default function TripDetailPage() {
                 }
             </main>
 
-            <footer className="detail-page-footer">
+            <footer className="add-form-page">
                     <AddLocationForm onAdd={addLocationToTrip}/>
             </footer>
         </>

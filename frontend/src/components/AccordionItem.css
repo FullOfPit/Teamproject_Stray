@@ -16,11 +16,16 @@
 }
 
 .accordion-item-title a {
-    color: black;
+    color: #22223B;
     padding-left: 1rem;
     text-decoration: none;
 }
 
 .accordion-item:first-of-type {
-    background-color: #FA9639;
+    background-color: #FCA311;
+}
+
+.accordion-item{
+    border-radius: 5px;
+    margin-bottom: 1rem;
 }

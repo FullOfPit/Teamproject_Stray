@@ -1,3 +1,7 @@
+.input-group{
+    margin-top: 1rem ;
+    margin-bottom: 1rem ;
+}
 
 .overlay{
     position: fixed;
@@ -6,17 +10,19 @@
     top: var(--app-header-height, 70px);
     left: 0;
     right: 0;
-    bottom: 0;
-    background-color: rgba(0,0,0,.5);
-    z-index: 2;
+    bottom: 50px;
+    background-color: rgba(0,0,0,.8);
+    z-index: 10;
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
 .overlay-inner{
+    color: white;
     position: relative;
-    width: 80%;
+    width: 60%;
+    margin-bottom: 5rem;
     padding: 2rem;
-    background-color: var(--bg-color-sticky, white);
+    background-color: #829CBC;
 }

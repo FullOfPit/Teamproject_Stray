@@ -4,7 +4,8 @@
     width: 100%;
 
     border-bottom: 1px solid black;
-    background-color: #FA9639;
+    background-color: #FCA311;
+    color: #22223B;
 }
 
 .header-bar-container {
@@ -47,14 +48,14 @@
 
 .side-menu {
     position: fixed;
-    top: 0px;
-    right: 0px;
+    top: 0;
+    right: 0;
     z-index: 1;
 
     height: 100%;
     width: 65%;
 
-    background-color: #2162FA;
+    background-color: #293241;
     border-left: 1px solid black;
     text-align: center;
 }
@@ -62,17 +63,18 @@
 .side-menu-back {
     position: absolute;
     top: 4%;
+    color: #FCA311;
 }
 
 .side-menu-menu {
     padding: 25% 0 25% 0;
     font-size: 2rem;
+    color: #FCA311;
 }
 
 .side-menu-option {
     padding-bottom: 10%;
     font-size: 1.5rem;
-
 }
 
 .side-menu-settings {
@@ -86,9 +88,9 @@
 }
 
 .side-menu-option h4 {
-    color: white;
+    color: #FCA311;
     text-decoration: none;
-
+    text-underline-color: white;
 }
 
 

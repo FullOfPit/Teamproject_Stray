@@ -2,7 +2,7 @@ import "./TripFormPage.css";
 import LocationMap from "../components/LocationMap";
 import AddLocationForm from "../components/AddLocationForm";
 import Trip from "../types/Trip";
-import {useState} from "react";
+import {ChangeEvent, useState} from "react";
 import {useNavigate} from "react-router-dom";
 import Api from "../api/Api";
 import Location from "../types/Location";
@@ -26,21 +26,22 @@ export default function TripFormPage() {
 
     return (
         <>
-            <header>
-                <h3>Create a trip</h3>
+            <header className={"title"}>
+                <h1>Create a trip</h1>
             </header>
 
             <main>
                 <div>
                     <InputGroup>
-                        <Button variant={"light"} onClick={trip.title && trip.locations
+                        <Form.Control
+                            placeholder={"trip title... "}
+                            onChange={(e) => setTrip({...trip, title: e.target.value})}/>
+
+                        <Button variant={"outline-light"} onClick={trip.title && trip.locations
                             ? onSave
                             : () => alert("You do not have a trip title or trip locations set")
                         }>Save</Button>
-                        <Form.Control
-                            placeholder={"Trip Title "}
-                            onChange={e => setTrip({...trip, title: e.target.value})}/>
-                    </InputGroup>
+                   </InputGroup>
                 </div>
 
                 <LocationMap locations={trip.locations} routing={false}/>

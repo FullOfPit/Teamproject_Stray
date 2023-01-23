@@ -1,7 +1,7 @@
 .accordion {
     width: 100%;
-    color: black;
+    color: white;
 
-    --bs-accordion-bg: #FACB95;
+    --bs-accordion-bg: #D9D9D9;
     --bs-accordion-border-color: darkgrey;
 }

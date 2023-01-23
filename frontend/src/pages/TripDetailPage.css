@@ -3,9 +3,8 @@
     top: var(--app-header-height, 70px);
     z-index: 9;
     padding-bottom: 1rem;
-    border-bottom: 1px darkblue solid;
 
-    background-color: #2162FA;
+    background-color: #293241;
 
     text-align: center;
 }
@@ -20,7 +19,7 @@
     margin-top: 1rem;
     margin-bottom: 5rem;
 
-    border: 1px solid black;
+    border: 1px solid white;
     border-radius: 10px;
 }
 
@@ -33,6 +32,7 @@
     padding-right: 1rem;
 
     font-size: 1.5rem;
+    color: white;
 }
 
 .detail-page-stray-button {
@@ -56,4 +56,8 @@
     overflow-x: scroll;
 
     background-color: #FA9639;
+}
+
+p{
+    color: white;
 }
